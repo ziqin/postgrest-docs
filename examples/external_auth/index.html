@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Joe Nelson">
+        <link rel="canonical" href="http://postgrest.com/examples/external_auth/">
+        <link rel="shortcut icon" href="../../../../favicon.ico">
+        
+
+	<title>External Authentication - PostgREST</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">PostgREST</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Install <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../install/server/">The Server</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../install/ecosystem/">Ecosystem</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../api/reading/">Reading</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../api/writing/">Writing</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../admin/security/">Security</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/versioning/">Versioning</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/migration/">Migration</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/deployment/">Deployment</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/performance/">Performance</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../start/">Getting Started</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../users/">User Management</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../blog/">Multi-Tenant Blog</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">External Authentication</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../python-requests-jwt/">Python Client</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../blog/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../python-requests-jwt/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/begriffs/postgrest-docs">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#external-authentication">External Authentication</a></li>
+        
+            <li><a href="#sharing-the-jwt-secret">Sharing the JWT Secret</a></li>
+        
+            <li><a href="#user-model">User Model</a></li>
+        
+            <li><a href="#generating-a-jwt">Generating a JWT</a></li>
+        
+            <li><a href="#orders-endpoint">Orders Endpoint</a></li>
+        
+            <li><a href="#using-the-jwt">Using the JWT</a></li>
+        
+            <li><a href="#conclusion">Conclusion</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="external-authentication">External Authentication</h2>
+<p>API clients authenticate with <a href="http://jwt.io">JSON Web Tokens</a>.
+PostgREST does not support any other authentication mechanism
+directly, but they can be built on top. In this demo we will build
+a system that works with an external authentication server
+and integrates with a PostgREST server by sharing the same JWT secret.</p>
+<p>For a better understanding of JWT and PostgREST authentication system you should read
+the <a href="../users/">User Management</a> example as well.</p>
+<p>I'll use a <a href="http://rubyonrails.org">Rails</a> application using <a href="https://github.com/plataformatec/devise">Devise</a>
+just to make the example more concrete, but this could be replicated for
+any other external authentication system using the same principles.
+In case Rails is not your cup of tea you can continue reading and
+just skip the Ruby code samples. I'll also assume
+the use of JQuery for some client-side code samples for the sake of simplicity.</p>
+<p>I won't delve into Devise authentication details, for this would require a tutorial on its own,
+so I'm assuming that the reader's authentication system is already working.</p>
+<h3 id="sharing-the-jwt-secret">Sharing the JWT Secret</h3>
+<p>Allowing a third party to generate valid JWTs for your PostgREST API
+is just a matter of sharing a secret. So you need to give your authenticator
+software the same secret that was used in your API server under the <code>--jwt-secret</code>
+parameter.</p>
+<p>This could be done easly using environment variables. You set a <code>JWT_SECRET</code> variable
+in the environment where you run your rails app and it will be accessible in the global
+variable <code>ENV['JWT_SECRET']</code>.</p>
+<h3 id="user-model">User Model</h3>
+<p>We will map each user in this example to two database roles.
+So our application users are either <code>admin</code> or <code>customer</code>.
+If they are just visitors (not logged in) to our website they will be <code>anonymous</code>.
+One way of mapping users is to add a field in our users table indicating their database role.
+I'll add a text field called role to my users table:</p>
+<pre><code class="sql">ALTER TABLE users ADD role text NOT NULL DEFAULT 'customer';
+</code></pre>
+
+<p>Besides the main user that PostgREST uses to connect to PostgreSQL
+and the anonymous user, we will need two additional roles for our example:</p>
+<ul>
+<li>admin - to be used by users that access all the system rows.</li>
+<li>customer - to be used when user has restricted access to database rows.</li>
+</ul>
+<p>Bellow we have the commands to create all roles that will be used:</p>
+<pre><code class="sql">CREATE USER authenticator NOINHERIT;
+CREATE ROLE anonymous;
+CREATE ROLE admin;
+CREATE ROLE customer;
+
+GRANT customer, admin, anonymous TO authenticator;
+</code></pre>
+
+<h3 id="generating-a-jwt">Generating a JWT</h3>
+<p>Several libraries are available to generate JWT, you will find a very handy list in <a href="http://jwt.io">their website</a>
+under <strong>Libraries</strong>.
+To continue our Rails example I'll use the ruby library <a href="https://github.com/garyf/json_web_token">json_web_token</a>.</p>
+<p>In order to make the gem available in my Rails project I add the following line to my Gemfile:</p>
+<pre><code>gem 'json_web_token'
+</code></pre>
+
+<p>Then we create a Rails controller to serve JWTs for my authenticated users.
+For this I just open a file <code>app/controllers/api_tokens_controller.rb</code> with the content:</p>
+<pre><code class="ruby">class ApiTokensController &lt; ApplicationController
+  TOKEN_TTL = 1.hour
+
+  def show
+    unless ENV['JWT_SECRET'].present?
+      return render json: {error: &quot;you need to have JWT_SECRET configured to get an API token&quot;}, status: 500
+    end
+
+    unless current_user.present?
+      return render json: {error: &quot;only authenticated users can request the API token&quot;}, status: 401
+    end
+
+    expires_in TOKEN_TTL, public: false
+    render json: {token: jwt}, status: 200
+  end
+
+  private
+  def jwt
+    JsonWebToken.sign(claims, key: ENV['JWT_SECRET'])
+  end
+
+  def claims
+    # This token will expire 1 hour after being issued
+    {
+      role: current_user.role,
+      user_id: current_user.id.to_s,
+      exp: (Time.now + TOKEN_TTL).to_i
+    }
+  end
+end
+</code></pre>
+
+<div class="admonition note">
+    <p class="admonition-title">Token Time to Live</p>
+    <p>
+    In the code above we leverage the HTTP time based cache headers to expire the
+    endpoint cache at the same time as the token. In this example we have a token
+    that will be refresh one hour after its issuing time.
+    That's why both are based on the <code>TOKEN_TTL</code> constant.
+    </p>
+</div>
+
+<p>We also need to create a route in the <code>config/routes.rb</code> file:</p>
+<pre><code class="ruby">resource :api_token, only: [:show]
+</code></pre>
+
+<p>Now, any authenticated user in our rails application can request an api_token making a GET
+request to <code>/api_token</code>. This endpoint will return a json object with one property
+whose value is the token the API requests should use.</p>
+<h3 id="orders-endpoint">Orders Endpoint</h3>
+<p>Here is how to create a view to generate an endpoint <code>/orders</code> filtered by
+the logged in user:</p>
+<pre><code class="sql">ALTER DATABASE mydb SET postgrest.claims.user_id TO '';
+
+CREATE OR REPLACE FUNCTION current_user_id()
+RETURNS integer
+STABLE
+LANGUAGE SQL
+AS $$
+    SELECT nullif(current_setting('postgrest.claims.user_id'), '')::integer;
+$$;
+
+CREATE SCHEMA private;
+
+CREATE TABLE private.orders (
+    id serial primary key,
+    user_id int references users,
+    created_at timestamp not null default current_timestamp,
+    updated_at timestamp not null default current_timestamp
+);
+
+CREATE VIEW orders AS
+SELECT
+    id, user_id, created_at, updated_at
+FROM
+    private.orders o
+WHERE
+    current_user = 'admin' OR o.user_id = current_user_id();
+</code></pre>
+
+<div class="admonition note">
+    <p class="admonition-title">DRY privilege checking conditions</p>
+    <p>
+    You can encapsulate conditions that will be commonly used to check for privileges while reading a database row.
+    We used a function <code>current_user_id()</code> but we could add more conditions to functions
+    as the system becomes more complex.<br/>
+    Remember to mark your functions as <code>STABLE</code> so that PostgreSQL can inline then while planning the query.
+    </p>
+</div>
+
+<h3 id="using-the-jwt">Using the JWT</h3>
+<p>Now whenever you are authenticated in your Rails application you can use some Javascript
+ code to get the token and use it:</p>
+<pre><code class="javascript">$.getJSON('/api_token').done(function(data){
+    $.ajax('/orders', {'Authorization': 'Bearer ' + data.token}).done(function(data){
+        console.log('Visible Orders: ', data);
+    })
+}).fail(function(){
+    console.log('Error fetching API token');
+})
+</code></pre>
+
+<p>We could also store the token to avoid having to fetch it again in the same page.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>This section explained the implementation details for building an
+external authentication system working with PostgREST.
+With the previous <a href="../users/">User Management</a> example this should give a clearer
+idea of how to set up authentication for your API.</p></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Joe Nelson">
+        <link rel="canonical" href="http://postgrest.com/examples/blog/">
+        <link rel="shortcut icon" href="../../../../favicon.ico">
+        
+
+	<title>Multi-Tenant Blog - PostgREST</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">PostgREST</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Install <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../install/server/">The Server</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../install/ecosystem/">Ecosystem</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../api/reading/">Reading</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../api/writing/">Writing</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../admin/security/">Security</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/versioning/">Versioning</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/migration/">Migration</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/deployment/">Deployment</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/performance/">Performance</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../start/">Getting Started</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../users/">User Management</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Multi-Tenant Blog</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../external_auth/">External Authentication</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../python-requests-jwt/">Python Client</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../users/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../external_auth/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/begriffs/postgrest-docs">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#multi-tenant-blog">Multi-Tenant Blog</a></li>
+        
+            <li><a href="#adding-blog-specific-tables">Adding Blog-Specific Tables</a></li>
+        
+            <li><a href="#permissions">Permissions</a></li>
+        
+            <li><a href="#example-client-queries">Example client queries</a></li>
+        
+            <li><a href="#conclusion">Conclusion</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="multi-tenant-blog">Multi-Tenant Blog</h2>
+<p>In our blog app there will be anonymous users and authors. Each
+author can create and edit their own posts, and read (but not edit)
+the posts of other authors. Anonymous users cannot edit anything
+but can sign up for author accounts. Authors can also post comments
+on articles.</p>
+<p>This example builds off the previous previous <a href="../users/">User Management</a>
+one. We had previously created a signup and login system on top of
+JWT. We'll use this auth system for the blog. <strong>Run the SQL in the
+previous example</strong> first, before continuing with this example.</p>
+<p>For your convenience, the complete sql for the blog demo is
+<a href="https://github.com/begriffs/postgrest/blob/master/schema-templates/blog.sql">here</a>.
+You can try it out in this <a href="https://github.com/ruslantalpa/blogdemo">vagrant
+image</a> as well.</p>
+<h3 id="adding-blog-specific-tables">Adding Blog-Specific Tables</h3>
+<p>Storing the posts and comments is this simple. The comments do not
+form a tree, they are linear under a post.</p>
+<pre><code class="sql">create table if not exists
+posts (
+  id         bigserial primary key,
+  title      text not null,
+  body       text not null,
+  author     text not null references basic_auth.users (email)
+               on delete restrict on update cascade
+               default basic_auth.current_email(),
+  created_at timestamptz not null default current_date
+);
+
+create table if not exists
+comments (
+  id         bigserial primary key,
+  body       text not null,
+  author     text not null references basic_auth.users (email)
+               on delete restrict on update cascade
+               default basic_auth.current_email(),
+  post       bigint not null references posts (id)
+               on delete cascade on update cascade,
+  created_at timestamptz not null default current_date
+);
+</code></pre>
+
+<h3 id="permissions">Permissions</h3>
+<p>On top of the <code>authenticator</code> and <code>anon</code> access granted in the
+previous example, blogs have an <code>author</code> role with extra permissions.</p>
+<pre><code class="sql">create role author;
+grant author to authenticator;
+
+grant usage on schema public, basic_auth to author;
+
+-- authors can edit comments/posts
+grant select, insert, update, delete
+  on basic_auth.tokens, basic_auth.users to author;
+grant select, insert, update, delete
+  on table users, posts, comments to author;
+grant usage, select on sequence posts_id_seq, comments_id_seq to author;
+</code></pre>
+
+<p>To ensure that authors cannot edit each others' posts and comments
+we'll use <a href="http://www.postgresql.org/docs/9.5/static/ddl-rowsecurity.html">row-level
+security</a>.
+Note that it requires PostgreSQL 9.5 or later.</p>
+<pre><code class="sql">grant select on posts, comments to anon;
+
+ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
+
+drop policy if exists posts_select_unsecure on posts;
+create policy posts_select_unsecure on posts for select
+  using (true);
+
+drop policy if exists comments_select_unsecure on comments;
+create policy comments_select_unsecure on comments for select
+  using (true);
+
+drop policy if exists authors_eigencreate on posts;
+create policy authors_eigencreate on posts for insert
+  with check (
+    author = basic_auth.current_email()
+  );
+
+drop policy if exists authors_eigencreate on comments;
+create policy authors_eigencreate on comments for insert
+  with check (
+      author = basic_auth.current_email()
+  );
+
+drop policy if exists authors_eigenedit on posts;
+create policy authors_eigenedit on posts for update
+  using (author = basic_auth.current_email())
+  with check (
+    author = basic_auth.current_email()
+  );
+
+drop policy if exists authors_eigenedit on comments;
+create policy authors_eigenedit on comments for update
+  using (author = basic_auth.current_email())
+  with check (
+    author = basic_auth.current_email()
+  );
+
+drop policy if exists authors_eigendelete on posts;
+create policy authors_eigendelete on posts for delete
+  using (author = basic_auth.current_email());
+
+drop policy if exists authors_eigendelete on comments;
+create policy authors_eigendelete on comments for delete
+  using (author = basic_auth.current_email());
+</code></pre>
+
+<p>Finally we need to modify the <code>users</code> view from the previous example.
+This is because all authors share a single db role. We could have
+chosen to assign a new role for every author (all inheriting from
+<code>author</code>) but we choose to tell them apart by their email addresses.
+The addition below prevents authors from seeing each others' info
+in the <code>users</code> view.</p>
+<pre><code class="diff">  create or replace view users as
+  select actual.role as role,
+         '***'::text as pass,
+         actual.email as email,
+         actual.verified as verified
+  from basic_auth.users as actual,
+       (select rolname
+          from pg_authid
+         where pg_has_role(current_user, oid, 'member')
+       ) as member_of
+  where actual.role = member_of.rolname
++   and (
++     actual.role &lt;&gt; 'author'
++     or email = basic_auth.current_email()
++   );
+</code></pre>
+
+<h3 id="example-client-queries">Example client queries</h3>
+<ul>
+<li>Top ten most recent posts</li>
+</ul>
+<pre><code class="HTTP">  GET /posts?order=created_at.desc
+  Range: 0-9
+</code></pre>
+
+<ul>
+<li>Single post (randomly chose id=1) with its comments</li>
+</ul>
+<pre><code class="HTTP">  GET /posts?id=eq.1&amp;select=*,comments{*}
+</code></pre>
+
+<ul>
+<li>Add a new post</li>
+</ul>
+<pre><code class="HTTP">  POST /posts
+  Authorization: Bearer [JWT TOKEN]
+
+  {
+    &quot;title&quot;: &quot;My first post&quot;,
+    &quot;body&quot;: &quot;Meh, forgot what I wanted to say.&quot;
+  }
+</code></pre>
+
+<h3 id="conclusion">Conclusion</h3>
+<p>Voilà, a blog API. Most of the code ended up being for defining
+security. Once you have set up an authentication system, the code
+to do application specific things like blog posts and comments is
+short.  All the front-end routes and verbs are created automatically
+for you.</p></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

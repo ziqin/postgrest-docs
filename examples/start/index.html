@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Joe Nelson">
+        <link rel="canonical" href="http://postgrest.com/examples/start/">
+        <link rel="shortcut icon" href="../../../../favicon.ico">
+        
+
+	<title>Getting Started - PostgREST</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">PostgREST</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Install <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../install/server/">The Server</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../install/ecosystem/">Ecosystem</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../api/reading/">Reading</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../api/writing/">Writing</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../admin/security/">Security</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/versioning/">Versioning</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/migration/">Migration</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/deployment/">Deployment</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/performance/">Performance</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">Getting Started</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../users/">User Management</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../blog/">Multi-Tenant Blog</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../external_auth/">External Authentication</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../python-requests-jwt/">Python Client</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../../admin/performance/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../users/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/begriffs/postgrest-docs">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#getting-started">Getting Started</a></li>
+        
+            <li><a href="#your-first-simple-api">Your First (simple) API</a></li>
+        
+            <li><a href="#populating-data">Populating Data</a></li>
+        
+            <li><a href="#getting-and-embedding-data">Getting and Embedding Data</a></li>
+        
+            <li><a href="#singular-responses">Singular Responses</a></li>
+        
+            <li><a href="#conclusion">Conclusion</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="your-first-simple-api">Your First (simple) API</h3>
+<p>Let's start with the simplest thing possible. We will expose some tables directly for reading and writing by anyone.</p>
+<p>Start by making a database</p>
+<pre><code class="sh">createdb demo1
+</code></pre>
+
+<p>We'll set it up with a film example (courtesy of <a href="http://blog.jonharrington.org/postgrest-introduction/">Jonathan Harrington</a>). Copy the following into your clipboard:</p>
+<pre><code class="sql">BEGIN;
+
+CREATE TABLE director
+(
+  name text NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE film
+(
+  id serial PRIMARY KEY,
+  title text NOT NULL,
+  year date NOT NULL,
+  director text REFERENCES director (name)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  rating real NOT NULL DEFAULT 0,
+  language text NOT NULL
+);
+
+CREATE TABLE festival
+(
+  name text NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE competition
+(
+  id serial PRIMARY KEY,
+  name text NOT NULL,
+  festival text NOT NULL REFERENCES festival (name)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  year date NOT NULL
+);
+
+CREATE TABLE film_nomination
+(
+  id serial PRIMARY KEY,
+  competition integer NOT NULL REFERENCES competition (id)
+    ON UPDATE NO ACTION ON DELETE NO ACTION,
+  film integer NOT NULL REFERENCES film (id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  won boolean NOT NULL DEFAULT true
+);
+
+COMMIT;
+</code></pre>
+
+<p>Apply it to your new database by running</p>
+<pre><code class="sh"># On OS X
+pbpaste | psql demo1
+
+# Or Linux
+# xclip -selection clipboard -o | psql demo1
+</code></pre>
+
+<p>Start the PostgREST server and point it at the new database. (See the <a href="../../install/server/">installation instructions</a>.)</p>
+<pre><code class="sh">postgrest postgres://postgres:@localhost:5432/demo1 -a postgres --schema public
+</code></pre>
+
+<div class="admonition note">
+    <p class="admonition-title">Note about database users</p>
+
+    <p>If you installed PostgreSQL with Homebrew on Mac then the
+    database username may be your own login rather than
+    <code>postgres</code>.</p>
+</div>
+
+<h3 id="populating-data">Populating Data</h3>
+<p>Let's use PostgREST to populate the database. Install a REST client such as <a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en">Postman</a>. Now let's insert some data as a bulk post in CSV format:</p>
+<pre><code class="HTTP">POST http://localhost:3000/festival
+Content-Type: text/csv
+
+name
+Venice Film Festival
+Cannes Film Festival
+</code></pre>
+
+<p>In Postman it will look like this</p>
+<p><img alt="Festival bulk insert in postman" src="../../img/post-festivals.png" /></p>
+<p>Notice that the post type is <code>raw</code> and that <code>Content-Type: text/csv</code> set in the Headers tab.</p>
+<p>The server returns HTTP 201 Created. Because we inserted more than one item at once there is no <code>Location</code> header in the response. However sometimes you want to learn more about items which you just inserted. To have the server include the full results, include the header <code>Prefer: return=representation</code>.</p>
+<p>At this point if you send a GET request to <code>/festival</code> it should return</p>
+<pre><code class="json">[
+  {
+    &quot;name&quot;: &quot;Venice Film Festival&quot;
+  },
+  {
+    &quot;name&quot;: &quot;Cannes Film Festival&quot;
+  }
+]
+</code></pre>
+
+<p>Now that you've seen how to do a bulk insert, let's do some more and fully populate the database.</p>
+<p>Post the following to <code>/competition</code>:</p>
+<pre><code class="csv">name,festival,year
+Golden Lion,Venice Film Festival,2014-01-01
+Palme d'Or,Cannes Film Festival,2014-01-01
+</code></pre>
+
+<p>Now <code>/director</code>:</p>
+<pre><code class="csv">name
+Bertrand Bonello
+Atom Egoyan
+David Gordon Green
+Andrey Konchalovskiy
+Mario Martone
+Mike Leigh
+Roy Andersson
+Saverio Costanzo
+Alix Delaporte
+Jean-Pierre Dardenne
+Xiaoshuai Wang
+Kaan Müjdeci
+Tommy Lee Jones
+Nuri Bilge Ceylan
+Michel Hazanavicius
+Xavier Dolan
+Ramin Bahrani
+Alice Rohrwacher
+Andrew Niccol
+Rakhshan Bani-Etemad
+David Oelhoffen
+Bennett Miller
+David Cronenberg
+Shin'ya Tsukamoto
+Joshua Oppenheimer
+Olivier Assayas
+Jean-Luc Godard
+Alejandro González Iñárritu
+Benoît Jacquot
+Fatih Akin
+Francesco Munzi
+Ken Loach
+Abel Ferrara
+Xavier Beauvois
+Naomi Kawase
+</code></pre>
+
+<p>And <code>/film</code>:</p>
+<pre><code class="csv">title,year,director,rating,language
+Chuang ru zhe,2014-01-01,Xiaoshuai Wang,6.19999981,english
+The Look of Silence,2014-01-01,Joshua Oppenheimer,8.30000019,Indonesian
+Fires on the Plain,2014-01-01,Shin'ya Tsukamoto,5.80000019,Japanese
+Far from Men,2014-01-01,David Oelhoffen,7.5,english
+Good Kill,2014-01-01,Andrew Niccol,6.0999999,english
+Leopardi,2014-01-01,Mario Martone,6.9000001,english
+Sivas,2014-01-01,Kaan Müjdeci,7.69999981,english
+Black Souls,2014-01-01,Francesco Munzi,7.0999999,english
+Three Hearts,2014-01-01,Benoît Jacquot,5.80000019,French
+Pasolini,2014-01-01,Abel Ferrara,5.80000019,english
+Le dernier coup de marteau,2014-01-01,Alix Delaporte,6.5,english
+Manglehorn,2014-01-01,David Gordon Green,7.0999999,english
+Hungry Hearts,2014-01-01,Saverio Costanzo,6.4000001,English
+Belye nochi pochtalona Alekseya Tryapitsyna,2014-01-01,Andrey Konchalovskiy,6.9000001,Russian
+99 Homes,2014-01-01,Ramin Bahrani,7.30000019,english
+The Cut,2014-01-01,Fatih Akin,6,Armenian
+Birdman: Or (The Unexpected Virtue of Ignorance),2014-01-01,Alejandro González Iñárritu,8,English
+La rançon de la gloire,2014-01-01,Xavier Beauvois,5.69999981,French
+A Pigeon Sat on a Branch Reflecting on Existence,2014-01-01,Roy Andersson,7.19999981,english
+Tales,2014-01-01,Rakhshan Bani-Etemad,6.80000019,english
+The Wonders,2014-01-01,Alice Rohrwacher,6.80000019,Italian
+Foxcatcher,2014-01-01,Bennett Miller,7.19999981,English
+Mr. Turner,2014-01-01,Mike Leigh,7,English
+Jimmy's Hall,2014-01-01,Ken Loach,6.69999981,English
+The Homesman,2014-01-01,Tommy Lee Jones,6.5999999,English
+The Captive,2014-01-01,Atom Egoyan,5.9000001,english
+Goodbye to Language,2014-01-01,Jean-Luc Godard,6.19999981,French
+The Search,2014-01-01,Michel Hazanavicius,6.9000001,French
+Still the Water,2014-01-01,Naomi Kawase,6.9000001,Japanese
+Mommy,2014-01-01,Xavier Dolan,8.30000019,French
+&quot;Two Days, One Night&quot;,2014-01-01,Jean-Pierre Dardenne,7.4000001,French
+Maps to the Stars,2014-01-01,David Cronenberg,6.4000001,English
+Saint Laurent,2014-01-01,Bertrand Bonello,6.5,French
+Clouds of Sils Maria,2014-01-01,Olivier Assayas,6.9000001,english
+Winter Sleep,2014-01-01,Nuri Bilge Ceylan,8.5,Turkish
+</code></pre>
+
+<p>Finally <code>/film_nomination</code>:</p>
+<pre><code class="csv">competition,film,won
+1,1,f
+1,2,f
+1,3,f
+1,4,f
+1,5,f
+1,6,f
+1,7,f
+1,8,f
+1,9,f
+1,10,f
+1,11,f
+1,12,f
+1,13,f
+1,14,f
+1,15,f
+1,16,f
+1,17,f
+1,18,f
+1,19,f
+1,20,f
+2,21,f
+2,22,f
+2,23,f
+2,24,f
+2,25,f
+2,26,f
+2,27,f
+2,28,f
+2,29,f
+2,30,f
+2,31,f
+2,32,f
+2,33,f
+2,34,f
+2,35,f
+</code></pre>
+
+<h3 id="getting-and-embedding-data">Getting and Embedding Data</h3>
+<p>First let's review which films are stored in the database:</p>
+<pre><code class="http">GET http://localhost:3000/film
+</code></pre>
+
+<p>It gives us back a list of JSON objects. What if we care only about the film titles? Use <code>select</code> to shape the output:</p>
+<pre><code class="http">GET http://localhost:3000/film?select=title
+</code></pre>
+
+<pre><code class="json">[
+  {
+    &quot;title&quot;: &quot;Chuang ru zhe&quot;
+  },
+  {
+    &quot;title&quot;: &quot;The Look of Silence&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Fires on the Plain&quot;
+  },
+  ...
+]
+</code></pre>
+
+<p>Here is where it gets cool. PostgREST can embed objects in its response through foreign key relationships. Earlier we created a join table called <code>film_nomination</code>. It joins films and competitions. We can ask the server about the structure of this table:</p>
+<pre><code>OPTIONS http://localhost:3000/film_nomination
+</code></pre>
+
+<pre><code class="json">{
+  &quot;pkey&quot;: [
+    &quot;id&quot;
+  ],
+  &quot;columns&quot;: [
+    {
+      &quot;references&quot;: null,
+      &quot;default&quot;: &quot;nextval('film_nomination_id_seq'::regclass)&quot;,
+      &quot;precision&quot;: 32,
+      &quot;updatable&quot;: true,
+      &quot;schema&quot;: &quot;public&quot;,
+      &quot;name&quot;: &quot;id&quot;,
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;maxLen&quot;: null,
+      &quot;enum&quot;: [],
+      &quot;nullable&quot;: false,
+      &quot;position&quot;: 1
+    },
+    {
+      &quot;references&quot;: {
+        &quot;schema&quot;: &quot;public&quot;,
+        &quot;column&quot;: &quot;id&quot;,
+        &quot;table&quot;: &quot;competition&quot;
+      },
+      &quot;default&quot;: null,
+      &quot;precision&quot;: 32,
+      &quot;updatable&quot;: true,
+      &quot;schema&quot;: &quot;public&quot;,
+      &quot;name&quot;: &quot;competition&quot;,
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;maxLen&quot;: null,
+      &quot;enum&quot;: [],
+      &quot;nullable&quot;: false,
+      &quot;position&quot;: 2
+    },
+    {
+      &quot;references&quot;: {
+        &quot;schema&quot;: &quot;public&quot;,
+        &quot;column&quot;: &quot;id&quot;,
+        &quot;table&quot;: &quot;film&quot;
+      },
+      &quot;default&quot;: null,
+      &quot;precision&quot;: 32,
+      &quot;updatable&quot;: true,
+      &quot;schema&quot;: &quot;public&quot;,
+      &quot;name&quot;: &quot;film&quot;,
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;maxLen&quot;: null,
+      &quot;enum&quot;: [],
+      &quot;nullable&quot;: false,
+      &quot;position&quot;: 3
+    },
+    {
+      &quot;references&quot;: null,
+      &quot;default&quot;: &quot;true&quot;,
+      &quot;precision&quot;: null,
+      &quot;updatable&quot;: true,
+      &quot;schema&quot;: &quot;public&quot;,
+      &quot;name&quot;: &quot;won&quot;,
+      &quot;type&quot;: &quot;boolean&quot;,
+      &quot;maxLen&quot;: null,
+      &quot;enum&quot;: [],
+      &quot;nullable&quot;: false,
+      &quot;position&quot;: 4
+    }
+  ]
+}
+</code></pre>
+
+<p>From this you can see that the columns <code>film</code> and <code>competition</code> reference their eponymous tables. Let's ask the server for each film along with names of the competitions it entered. You don't have to do any custom coding. Send this query:</p>
+<pre><code class="http">GET http://localhost:3000/film?select=title,competition{name}
+</code></pre>
+
+<pre><code class="json">[
+  {
+    &quot;title&quot;: &quot;Chuang ru zhe&quot;,
+    &quot;competition&quot;: [
+      {
+        &quot;name&quot;: &quot;Golden Lion&quot;
+      }
+    ]
+  },
+  {
+    &quot;title&quot;: &quot;The Look of Silence&quot;,
+    &quot;competition&quot;: [
+      {
+        &quot;name&quot;: &quot;Golden Lion&quot;
+      }
+    ]
+  },
+  ...
+]
+</code></pre>
+
+<p>The relation flows both ways. Here is how to get the name of each competition's name and the movies shown at it.</p>
+<pre><code class="http">GET http://localhost:3000/competition?select=name,film{title}
+</code></pre>
+
+<pre><code class="json">[
+  {
+    &quot;name&quot;: &quot;Golden Lion&quot;,
+    &quot;film&quot;: [
+      {
+        &quot;title&quot;: &quot;Chuang ru zhe&quot;
+      },
+      {
+        &quot;title&quot;: &quot;The Look of Silence&quot;
+      },
+      ...
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;Palme d'Or&quot;,
+    &quot;film&quot;: [
+      {
+        &quot;title&quot;: &quot;The Wonders&quot;
+      },
+      {
+        &quot;title&quot;: &quot;Foxcatcher&quot;
+      },
+      ...
+    ]
+  }
+]
+</code></pre>
+
+<p>Why not learn about the directors too? There is a many-to-one relation directly between films and directors. We can alter our previous query to include directors in its results.</p>
+<pre><code class="http">GET http://localhost:3000/competition?select=name,film{title,director{*}}
+</code></pre>
+
+<pre><code class="json">[
+  {
+    &quot;name&quot;: &quot;Golden Lion&quot;,
+    &quot;film&quot;: [
+      {
+        &quot;title&quot;: &quot;Manglehorn&quot;,
+        &quot;director&quot;: {
+          &quot;name&quot;: &quot;David Gordon Green&quot;
+        }
+      },
+      {
+        &quot;title&quot;: &quot;Belye nochi pochtalona Alekseya Tryapitsyna&quot;,
+        &quot;director&quot;: {
+          &quot;name&quot;: &quot;Andrey Konchalovskiy&quot;
+        }
+      },
+      ...
+    ]
+  },
+  ...
+]
+</code></pre>
+
+<h3 id="singular-responses">Singular Responses</h3>
+<p>How do we ask for a single film, for instance the second one we inserted?</p>
+<pre><code class="http">GET http://localhost:3000/film?id=eq.2
+</code></pre>
+
+<p>It returns</p>
+<pre><code class="json">[
+  {
+    &quot;id&quot;: 2,
+    &quot;title&quot;: &quot;The Look of Silence&quot;,
+    &quot;year&quot;: &quot;2014-01-01&quot;,
+    &quot;director&quot;: &quot;Joshua Oppenheimer&quot;,
+    &quot;rating&quot;: 8.3,
+    &quot;language&quot;: &quot;Indonesian&quot;
+  }
+]
+</code></pre>
+
+<p>Like any query, it gives us a result <em>set</em>, in this case an array with one element. However you and I know that <code>id</code> is a primary key, it will never return more than one result. We might want it returned as a JSON object, not an array. To express this preference include the header <code>Prefer: plurality=singular</code>. It will respond with</p>
+<pre><code class="json">{
+  &quot;id&quot;: 2,
+  &quot;title&quot;: &quot;The Look of Silence&quot;,
+  &quot;year&quot;: &quot;2014-01-01&quot;,
+  &quot;director&quot;: &quot;Joshua Oppenheimer&quot;,
+  &quot;rating&quot;: 8.3,
+  &quot;language&quot;: &quot;Indonesian&quot;
+}
+</code></pre>
+
+<div class="admonition note">
+    <p class="admonition-title">Why this approach to singular responses?</p>
+
+    <p>
+    PostgREST knows which columns comprise a primary key for a
+    table, so why not automatically choose plurality=singular when
+    these column filters are present? The fact is it could come as a
+    shock to a client that by adding one more filter condition it can
+    change the entire response format.
+    </p>
+    <p>
+    Then why not expose another kind of route such as /film/2 to indicate
+    one particular film? Because this does not accommodate compound keys.
+    The convention complects a plurality preference with table key
+    assumptions. We should separate concerns.
+    </p>
+    <p>
+    It turns out you can still have routes like /film/2.  Use a
+    proxy such as Nginx. It can rewrite routes such as /films/2
+    into /films?id=eq.2 and add the Prefer header to make the results
+    singular.
+    </p>
+</div>
+
+<h3 id="conclusion">Conclusion</h3>
+<p>This tutorial showed how to create a database with a basic schema, run PostgREST, and interact with the API. The next tutorial will show how to enable security for a multi-tenant blogging API.</p></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Joe Nelson">
+        <link rel="canonical" href="http://postgrest.com/install/server/">
+        <link rel="shortcut icon" href="../../../../favicon.ico">
+        
+
+	<title>The Server - PostgREST</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">PostgREST</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Install <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">The Server</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../ecosystem/">Ecosystem</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../api/reading/">Reading</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../api/writing/">Writing</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../admin/security/">Security</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/versioning/">Versioning</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/migration/">Migration</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/deployment/">Deployment</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../admin/performance/">Performance</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../examples/start/">Getting Started</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../examples/users/">User Management</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../examples/blog/">Multi-Tenant Blog</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../examples/external_auth/">External Authentication</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../examples/python-requests-jwt/">Python Client</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../..">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../ecosystem/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/begriffs/postgrest-docs">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#installation">Installation</a></li>
+        
+            <li><a href="#installing-from-pre-built-release">Installing from Pre-Built Release</a></li>
+        
+            <li><a href="#building-from-source">Building from Source</a></li>
+        
+            <li><a href="#running-the-server">Running the Server</a></li>
+        
+            <li><a href="#install-via-homebrew-mac-os-x">Install via Homebrew (Mac OS X)</a></li>
+        
+            <li><a href="#installing-postgresql">Installing PostgreSQL</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="installation">Installation</h2>
+<h3 id="installing-from-pre-built-release">Installing from Pre-Built Release</h3>
+<p>The <a href="https://github.com/begriffs/postgrest/releases/latest">release page</a>
+has precompiled binaries for Mac OS X, Windows, and several Linux
+distros.  Extract the tarball and run the binary inside with no
+arguments to see usage instructions:</p>
+<pre><code class="sh"># Untar the release (available at https://github.com/begriffs/postgrest/releases/latest)
+
+$ tar zxf postgrest-[version]-[platform].tar.xz
+
+# Try running it
+$ ./postgrest
+
+# You should see a usage help message
+</code></pre>
+
+<div class="admonition warning">
+    <p class="admonition-title">Invitation to Contribute</p>
+
+    <p>I currently build the binaries manually for each architecture.
+    It would be nice to set up an automated build matrix for various
+    architectures. It should support Mac, Windows and 32- and 64-bit
+    versions of
+
+    <ul><li>Scientific Linux 6</li><li>CentOS</li><li>RHEL 6</li></ul></p>
+</div>
+
+<h3 id="building-from-source">Building from Source</h3>
+<p>When a prebuilt binary does not exist for your system you can build
+the project from source. You'll also need to do this if you want
+to help with development.
+<a href="https://github.com/commercialhaskell/stack">Stack</a> makes it easy.
+It will install any necessary Haskell dependencies on your system.</p>
+<ul>
+<li><a href="http://docs.haskellstack.org/en/stable/README.html#how-to-install">Install Stack</a> for your platform</li>
+</ul>
+<pre><code class="bash">#ubuntu example
+#See the link above for other operating systems
+
+wget -q -O- https://s3.amazonaws.com/download.fpcomplete.com/ubuntu/fpco.key | sudo apt-key add -
+echo 'deb http://download.fpcomplete.com/ubuntu/trusty stable main'|sudo tee /etc/apt/sources.list.d/fpco.list
+sudo apt-get update &amp;&amp; sudo apt-get install stack -y
+</code></pre>
+
+<ul>
+<li>Install libpq-dev</li>
+</ul>
+<pre><code>sudo apt-get install -y libpq-dev
+</code></pre>
+
+<ul>
+<li>Build &amp; install in one step</li>
+</ul>
+<pre><code class="bash">git clone https://github.com/begriffs/postgrest.git
+cd postgrest
+stack build --install-ghc
+sudo stack install --allow-different-user --local-bin-path /usr/local/bin
+</code></pre>
+
+<ul>
+<li>Run the server</li>
+</ul>
+<p>If you want to run the test suite, stack can do that too: <code>stack test</code>.</p>
+<h3 id="running-the-server">Running the Server</h3>
+<pre><code class="bash">postgrest postgres://user:pass@host:port/db -a anon_user [other flags]
+</code></pre>
+
+<p>The user in the connection string is the "authenticator role," i.e.
+a role which is used temporarily to switch into other roles depending
+on the authentication request JWT. For simple APIs you can use the
+same role for authenticator and anonymous.</p>
+<p>The complete list of options:</p>
+<dl>
+<dt>-p, --port</dt>
+<dd>The port on which the server will listen for HTTP requests.
+    Defaults to 3000.</dd>
+
+<dt>-a, --anonymous (required)</dt>
+<dd>The database role used to execute commands for those requests
+    which provide no JWT authorization.</dd>
+
+<dt>-s, --schema</dt>
+<dd>The db schema which you want to expose as an API. For historical
+    reasons it defaults to <code>1</code>, but you're more likely
+    to want to choose a value of <code>public</code>.</dd>
+
+<dt>-j, --jwt-secret</dt>
+<dd>The secret passphrase used to encrypt JWT tokens. Defaults to
+    <code>secret</code> but do not use the default in production!
+    Load-balanced PostgREST servers should share the same secret.</dd>
+
+<dt>-o, --pool</dt>
+<dd>Max connections to use in db pool. Defaults to to 10, but you
+    should find an optimal value for your db by running the SQL
+    command <code>show max_connections;</code></dd>
+
+<dt>-m, --max-rows</dt>
+<dd>Max number of rows to return in a read request. The default is
+    no limit.</dd>
+</dl>
+
+<div class="admonition note">
+    <p class="admonition-title">Hiding Password from Process List</p>
+
+    <p>Passing the database password and JWT secret as naked
+    parameters might not be a good idea because the parameters are
+    visible in a <code>ps</code> listing. One solution is to set
+    environment variables such as PASS and use <code>$PASS</code>
+    in the connection string.  Another is to use a user-specific
+    <a
+    href="http://www.postgresql.org/docs/current/static/libpq-pgpass.html">.pgpass</a>
+    file.</p>
+</div>
+
+<p>When running <code>postgrest</code> on the same machine as PostgreSQL, it is also
+possible to connect to the database using the [Unix socket]
+(https://en.wikipedia.org/wiki/Unix_domain_socket) and the
+[Peer Authentication method]
+(http://www.postgresql.org/docs/current/static/auth-methods.html#AUTH-PEER)
+as an alternative to TCP/IP communication and authentication with a password.</p>
+<p>The Peer Authentication grants access to the database to any Unix user
+who connects as a user of the same name in the database.
+Since the empty host resolves to the Unix socket]
+(http://www.postgresql.org/docs/current/static/libpq-connect.html#AEN42494)
+and the password can be omitted in this case,
+the command line is reduced to:</p>
+<pre><code class="sh">sudo -u user postgrest postgres://user@/db [flags]
+</code></pre>
+
+<p>where the <code>sudo -u user</code> command runs the following command as given <code>user</code>.</p>
+<p>If you create a Unix user <code>postgrest</code> and a database user <code>postgrest</code>
+for example, the command becomes:</p>
+<pre><code class="sh">sudo -u postgrest postgrest postgres://postgrest@/db [flags]
+</code></pre>
+
+<p>The first <code>postgrest</code> is the Unix user name, the second <code>postgrest</code>
+is the name of the executable, the third <code>postgrest</code> is the name
+of the database user.</p>
+<h3 id="install-via-homebrew-mac-os-x">Install via Homebrew (Mac OS X)</h3>
+<p>You can use the Homebrew package manager to install PostgREST on Mac</p>
+<pre><code class="bash"># Ensure brew is up to date
+brew update
+
+# Check for any problems with brew's setup
+brew doctor
+
+# Install the postgrest package
+brew install postgrest
+</code></pre>
+
+<p>This will automatically install PostgreSQL as a dependency (see the <a href="#installing-postgresql">Installing PostgreSQL</a> section for setup instructions). The process tends to take up to 15 minutes to install the package and its dependencies.</p>
+<p>After installation completes, the tool is added to your $PATH and can be used from anywhere with:</p>
+<pre><code class="bash">postgrest --help
+</code></pre>
+
+<h3 id="installing-postgresql">Installing PostgreSQL</h3>
+<p>To use PostgREST you will need an underlying database (PostgreSQL version 9.3 or greater is required). You can use something like Amazon <a href="https://aws.amazon.com/rds/">RDS</a> but installing your own locally is cheaper and more convenient for development.</p>
+<ul>
+<li><a href="http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/">Instructions for OS X</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04">Instructions for Ubuntu 14.04</a></li>
+<li><a href="http://www.enterprisedb.com/products-services-training/pgdownload#windows">Installer for Windows</a></li>
+</ul></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
