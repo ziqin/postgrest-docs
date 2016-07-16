@@ -224,6 +224,8 @@
         
             <li><a href="#record-creation">Record Creation</a></li>
         
+            <li><a href="#record-update">Record Update</a></li>
+        
             <li><a href="#bulk-insertion">Bulk Insertion</a></li>
         
             <li><a href="#multiple-tables-insertion-or-update">Multiple Tables Insertion or Update</a></li>
@@ -258,6 +260,13 @@ in the response to your request, include the header <code>Prefer:
 return=representation</code>. That way you won't have to make another
 HTTP call to discover properties that may have been filled in on
 the server side.</p>
+<h3 id="record-update">Record Update</h3>
+<p>To update a single existing record, you will need to make a <code>PATCH</code> 
+request, and use filtering via parameters to specify which record to update.</p>
+<pre><code class="HTTP">PATCH /table_name?myPKey=eq.thePKey
+{ &quot;col1&quot;:&quot;update-value1&quot;, &quot;col2&quot;:&quot;update-value2&quot; }
+</code></pre>
+
 <h3 id="bulk-insertion">Bulk Insertion</h3>
 <ul>
 <li>❌ Cannot be cached or prefetched</li>
