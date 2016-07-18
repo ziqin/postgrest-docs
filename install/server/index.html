@@ -253,17 +253,6 @@ $ ./postgrest
 # You should see a usage help message
 </code></pre>
 
-<div class="admonition warning">
-    <p class="admonition-title">Invitation to Contribute</p>
-
-    <p>I currently build the binaries manually for each architecture.
-    It would be nice to set up an automated build matrix for various
-    architectures. It should support Mac, Windows and 32- and 64-bit
-    versions of
-
-    <ul><li>Scientific Linux 6</li><li>CentOS</li><li>RHEL 6</li></ul></p>
-</div>
-
 <h3 id="building-from-source">Building from Source</h3>
 <p>When a prebuilt binary does not exist for your system you can build
 the project from source. You'll also need to do this if you want
@@ -272,23 +261,34 @@ to help with development.
 It will install any necessary Haskell dependencies on your system.</p>
 <ul>
 <li><a href="http://docs.haskellstack.org/en/stable/README.html#how-to-install">Install Stack</a> for your platform</li>
-</ul>
-<pre><code class="bash">#ubuntu example
-#See the link above for other operating systems
-
-wget -q -O- https://s3.amazonaws.com/download.fpcomplete.com/ubuntu/fpco.key | sudo apt-key add -
-echo 'deb http://download.fpcomplete.com/ubuntu/trusty stable main'|sudo tee /etc/apt/sources.list.d/fpco.list
-sudo apt-get update &amp;&amp; sudo apt-get install stack -y
-</code></pre>
-
-<ul>
-<li>Install libpq-dev</li>
-</ul>
-<pre><code>sudo apt-get install -y libpq-dev
-</code></pre>
-
-<ul>
-<li>Build &amp; install in one step</li>
+<li>
+<p>Install Library Dependencies</p>
+<table>
+<thead>
+<tr>
+<th>Operating System</th>
+<th>Dependencies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ubuntu/Debian</td>
+<td>libpq-dev</td>
+</tr>
+<tr>
+<td>CentOS/Fedora/Red Hat</td>
+<td>postgresql-devel, zlib-devel</td>
+</tr>
+<tr>
+<td>BSD</td>
+<td>postgresql95-server</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Build &amp; install in one step</p>
+</li>
 </ul>
 <pre><code class="bash">git clone https://github.com/begriffs/postgrest.git
 cd postgrest
@@ -297,7 +297,7 @@ sudo stack install --allow-different-user --local-bin-path /usr/local/bin
 </code></pre>
 
 <ul>
-<li>Run the server</li>
+<li>Check that the server is installed: <code>postgrest --help</code></li>
 </ul>
 <p>If you want to run the test suite, stack can do that too: <code>stack test</code>.</p>
 <h3 id="running-the-server">Running the Server</h3>
@@ -351,16 +351,16 @@ same role for authenticator and anonymous.</p>
     file.</p>
 </div>
 
-<p>When running <code>postgrest</code> on the same machine as PostgreSQL, it is also
-possible to connect to the database using the [Unix socket]
-(https://en.wikipedia.org/wiki/Unix_domain_socket) and the
-[Peer Authentication method]
-(http://www.postgresql.org/docs/current/static/auth-methods.html#AUTH-PEER)
-as an alternative to TCP/IP communication and authentication with a password.</p>
+<p>When running <code>postgrest</code> on the same machine as PostgreSQL, it is
+also possible to connect to the database using the <a href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix
+socket</a> and the
+<a href="http://www.postgresql.org/docs/current/static/auth-methods.html#AUTH-PEER">Peer Authentication
+method</a>
+as an alternative to TCP/IP communication and authentication with
+a password.</p>
 <p>The Peer Authentication grants access to the database to any Unix user
 who connects as a user of the same name in the database.
-Since the empty host resolves to the Unix socket]
-(http://www.postgresql.org/docs/current/static/libpq-connect.html#AEN42494)
+Since the empty host resolves to the <a href="http://www.postgresql.org/docs/current/static/libpq-connect.html#AEN42494">Unix socket</a>
 and the password can be omitted in this case,
 the command line is reduced to:</p>
 <pre><code class="sh">sudo -u user postgrest postgres://user@/db [flags]
