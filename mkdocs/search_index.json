@@ -102,7 +102,7 @@
         }, 
         {
             "location": "/install/ecosystem/", 
-            "text": "Ecosystem\n\n\nClient-Side Libraries\n\n\n\n\ncalebmer/postgrest-client\n - Advanced JS client for the PostgREST API\n\n\nmithril.postgrest\n - Mithril plugin to create and authenticate requests\n\n\nlewisjared/postgrest-request\n - node interface to postgrest instances\n\n\nJarvusInnovations/jarvus-postgrest-apikit\n - Sencha framework package for binding models/stores/proxies to PostgREST tables\n\n\ndavidthewatson/postgrest_python_requests_client\n - python client featuring JWT auth and pagination of result sets\n\n\n\n\nExtensions\n\n\n\n\nsrid/spas\n - allow file uploads and basic auth\n\n\n\n\nExample Apps\n\n\n\n\nbenoror/ember-postgrest-dynamic-ui\n - generating Ember forms to edit data\n\n\nruslantalpa/blogdemo\n - blog api demo in a vagrant image\n\n\ntimwis/ext-postgrest-crud\n - browser-based spreadsheet\n\n\nsrid/chronicle\n - tracking a tree of personal memories\n\n\nbegriffs/postgrest-example\n - how to configure a db for use as an API\n\n\nmarmelab/ng-admin-postgrest\n - automatic database admin panel\n\n\ntyrchen/goodfilm\n - example film api\n\n\n\n\nIn Production\n\n\n\n\nCatarse\n\n\n\n\nCommercial\n\n\n\n\nSub0\n - Automated GraphQL \n REST API for your PostgreSQL database with built-in caching", 
+            "text": "Ecosystem\n\n\nClient-Side Libraries\n\n\n\n\ncalebmer/postgrest-client\n - Advanced JS client for the PostgREST API\n\n\nmithril.postgrest\n - Mithril plugin to create and authenticate requests\n\n\nlewisjared/postgrest-request\n - node interface to postgrest instances\n\n\nJarvusInnovations/jarvus-postgrest-apikit\n - Sencha framework package for binding models/stores/proxies to PostgREST tables\n\n\ndavidthewatson/postgrest_python_requests_client\n - python client featuring JWT auth and pagination of result sets\n\n\n\n\nExtensions\n\n\n\n\ndiogob/postgrest-ws\n - expose websockets for Postgres' LISTEN/NOTIFY\n\n\nsrid/spas\n - allow file uploads and basic auth\n\n\n\n\nExample Apps\n\n\n\n\nbenoror/ember-postgrest-dynamic-ui\n - generating Ember forms to edit data\n\n\nruslantalpa/blogdemo\n - blog api demo in a vagrant image\n\n\ntimwis/ext-postgrest-crud\n - browser-based spreadsheet\n\n\nsrid/chronicle\n - tracking a tree of personal memories\n\n\nbegriffs/postgrest-example\n - how to configure a db for use as an API\n\n\nmarmelab/ng-admin-postgrest\n - automatic database admin panel\n\n\ntyrchen/goodfilm\n - example film api\n\n\n\n\nIn Production\n\n\n\n\nCatarse\n\n\nDrip Depot\n\n\n\n\nCommercial\n\n\n\n\nSub0\n - Automated GraphQL \n REST API for your PostgreSQL database with built-in caching", 
             "title": "Ecosystem"
         }, 
         {
@@ -117,7 +117,7 @@
         }, 
         {
             "location": "/install/ecosystem/#extensions", 
-            "text": "srid/spas  - allow file uploads and basic auth", 
+            "text": "diogob/postgrest-ws  - expose websockets for Postgres' LISTEN/NOTIFY  srid/spas  - allow file uploads and basic auth", 
             "title": "Extensions"
         }, 
         {
@@ -127,7 +127,7 @@
         }, 
         {
             "location": "/install/ecosystem/#in-production", 
-            "text": "Catarse", 
+            "text": "Catarse  Drip Depot", 
             "title": "In Production"
         }, 
         {
