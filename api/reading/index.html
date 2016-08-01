@@ -286,10 +286,22 @@ API endpoint supports only POST which executes the function.</p>
 <pre><code class="HTTP">POST /rpc/proc_name
 </code></pre>
 
-<p>PostgREST supports calling procedures with <a href="http://www.postgresql.org/docs/9.4/static/sql-syntax-calling-funcs.html#SQL-SYNTAX-CALLING-FUNCS-NAMED">named
+<p>PostgREST supports calling procedures with <a href="https://www.postgresql.org/docs/current/static/sql-syntax-calling-funcs.html#SQL-SYNTAX-CALLING-FUNCS-NAMED">named
 arguments</a>.
 Include a JSON object in the request payload and each
 key/value of the object will become an argument.</p>
+<p>For instance, assume we have created this function in the database.</p>
+<pre><code class="sql">CREATE FUNCTION add_them(a integer, b integer) RETURNS integer
+AS $$
+ SELECT $1 + $2;
+$$ LANGUAGE SQL IMMUTABLE STRICT;
+</code></pre>
+
+<p>The PostgREST client can call it by posting an object like <code>{ "a":
+1, "b": 2}</code> to <code>/rpc/add_them</code>. The keys of the object match the
+parameter names. Note that PostgreSQL converts parameter names to
+lowercase unless you quote them like <code>CREATE FUNCTION foo("mixedCase"
+text) ...</code>.</p>
 <div class="admonition note">
   <p class="admonition-title">Design Consideration</p>
 
