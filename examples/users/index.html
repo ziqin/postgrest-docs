@@ -202,7 +202,7 @@
                 
                 
                     <li>
-                        <a href="https://github.com/begriffs/postgrest-docs">
+                        <a href="https://github.com/begriffs/postgrest">
                             
                                 <i class="fa fa-github"></i>
                             
@@ -604,10 +604,12 @@ have its return value encoded. For instance, let's make a login function
 which consults our users table.</p>
 <p>First create a return type:</p>
 <pre><code class="sql">drop type if exists basic_auth.jwt_claims cascade;
-create type basic_auth.jwt_claims AS (role text, email text);
+create type basic_auth.jwt_claims AS (role text, email text, exp integer);
 </code></pre>
 
-<p>And now the function:</p>
+<p>The <code>exp</code> field is expiration time of the token expressed in seconds
+since the epoch. In the function below we choose to make the token
+valid for one hour.</p>
 <pre><code class="sql">create or replace function
 login(email text, pass text) returns basic_auth.jwt_claims
   language plpgsql
@@ -630,7 +632,9 @@ begin
   if not _verified then
     raise invalid_authorization_specification using message = 'user is not verified';
   end if;
-  select _role as role, login.email as email into result;
+  select _role as role, login.email as email,
+         extract(epoch from now())::integer + 60*60 as exp
+    into result;
   return result;
 end;
 $$;
