@@ -1,9 +1,9 @@
-Motivation
+动机
 ##########
 
-PostgREST is a standalone web server that turns your PostgreSQL database directly into a RESTful API. The structural constraints and permissions in the database determine the API endpoints and operations.
+PostgREST 是一个可以使用 PostgreSQL 数据库直接生成 RESTful API 的独立的 web server. 数据库中的结构约束和权限决定了 API 的端点和操作 (endpoints and operations).
 
-Using PostgREST is an alternative to manual CRUD programming. Custom API servers suffer problems. Writing business logic often duplicates, ignores or hobbles database structure. Object-relational mapping is a leaky abstraction leading to slow imperative code. The PostgREST philosophy establishes a single declarative source of truth: the data itself.
+使用 PostgREST 可以简单的替代 CRUD 开发. 自定义的 API 开发总是存在着一些问题, 编写的业务逻辑常常是重复劳动, 不管或者使用有问题的数据结构. ORM 则是导致低效命令式代码的不严谨的抽象. 而 PostgREST 的哲学是 建立一个真实 (truth) 的单一陈述源----数据本身.
 
 Declarative Programming
 -----------------------
