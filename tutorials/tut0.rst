@@ -1,24 +1,24 @@
 .. _tut0:
 
-Tutorial 0 - Get it Running
+Tutorial 0 - 让它跑起来
 ===========================
 
-Welcome to PostgREST! In this pre-tutorial we're going to get things running so you can create your first simple API.
+欢迎使用 PostgREST！该前言是一个 Quick start，帮助你快速创建第一个简单的 API。
 
-PostgREST is a standalone web server which turns a PostgreSQL database into a RESTful API. It serves an API that is customized based on the structure of the underlying database.
+PostgREST 是一个独立的 Web 服务器，为 PostgreSQL 数据库生成 RESTful API。 它提供基于底层数据库结构定制的 API。
 
 .. image:: ../_static/tuts/tut0-request-flow.png
 
-To make an API we'll simply be building a database. All the endpoints and permissions come from database objects like tables, views, roles, and stored procedures. These tutorials will cover a number of common scenarios and how to model them in the database.
+想要生成 API，我们只需要创建一个数据库。所有端点和权限都来自数据库对象，如表、视图、角色和存储过程。这些教程将涵盖许多常见的情况以及如何在数据库中对它们进行建模。
 
-By the end of this tutorial you'll have a working database, PostgREST server, and a simple single-user todo list API.
+在本教程结束的时候，您将拥有一个能用的数据库，PostgREST 服务器和一个简单的单用户 todo list API。
 
-Step 1. Relax, we'll help
+Step 1. 放轻松老铁, 我们会帮你的
 -------------------------
 
-As you begin the tutorial, pop open the project `chat room <https://gitter.im/begriffs/postgrest>`_ in another tab.  There are a nice group of people active in the project and we'll help you out if you get stuck.
+在你开始这个教程时, Ctrl+T 一下在新标签中打开项目`聊天室 <https://gitter.im/begriffs/postgrest>`_. 有一群很 nice 的人在聊天室中活跃，如果你卡住了我们会帮你的。
 
-Step 2. Install PostgreSQL
+Step 2. 安装 PostgreSQL
 --------------------------
 
 You'll need a modern copy of the database running on your system, either natively or in a Docker instance. We require PostgreSQL 9.3 or greater, but recommend at least 9.5 for row-level security features that we'll use in future tutorials.
@@ -35,7 +35,7 @@ If Docker is not installed, you can get it `here <https://www.docker.com/communi
 
 This will run the Docker instance as a daemon and expose port 5432 to the host system so that it looks like an ordinary PostgreSQL server to the rest of the system.
 
-Step 3. Install PostgREST
+Step 3. 安装 PostgREST
 -------------------------
 
 PostgREST is distributed as a single binary, with versions compiled for major distributions of Linux/BSD/Windows. Visit the `latest release <https://github.com/begriffs/postgrest/releases/latest>`_ for a list of downloads. In the event that your platform is not among those already pre-built, see :ref:`build_source` for instructions how to build it yourself. Also let us know to add your platform in the next release.
@@ -88,7 +88,7 @@ If everything is working correctly it will print out its version and information
     </details>
     </p>
 
-Step 4. Create Database for API
+Step 4. 为 API 创建数据库
 -------------------------------
 
 Connect to to SQL console (psql) inside the container. To do so, run this from your command line:
@@ -144,7 +144,7 @@ Now quit out of psql; it's time to start the API!
 
   \q
 
-Step 5. Run PostgREST
+Step 5. 运行 PostgREST
 ---------------------
 
 PostgREST uses a configuration file to tell it how to connect to the database. Create a file :code:`tutorial.conf` with this inside:
