@@ -14,18 +14,18 @@ PostgREST 是一个独立的 Web 服务器，为 PostgreSQL 数据库生成 REST
 在本教程结束的时候，您将拥有一个能用的数据库，PostgREST 服务器和一个简单的单用户 todo list API。
 
 Step 1. 放轻松老铁, 我们会帮你的
--------------------------
+--------------------------------
 
-在你开始这个教程时, Ctrl+T 一下在新标签中打开项目`聊天室 <https://gitter.im/begriffs/postgrest>`_. 有一群很 nice 的人在聊天室中活跃，如果你卡住了我们会帮你的。
+在你开始这个教程时, Ctrl+T 一下在新标签中打开项目 `聊天室 <https://gitter.im/begriffs/postgrest>`_ . 有一群很 nice 的人在聊天室中活跃，如果你卡住了我们会帮你的。
 
 Step 2. 安装 PostgreSQL
 --------------------------
 
-You'll need a modern copy of the database running on your system, either natively or in a Docker instance. We require PostgreSQL 9.3 or greater, but recommend at least 9.5 for row-level security features that we'll use in future tutorials.
+您将需要在本机或 Docker 实例中运行一个数据库的现代副本（modern copy）。我们需要 PostgreSQL 9.3 或更高版本，但建议至少 9.5 用于 row-level 安全性功能（在后面的教程中会用到）。
 
-If you're already familiar with using PostgreSQL and have it installed on your system you can use the existing installation. For this tutorial we'll describe how to use the database in Docker because database configuration is otherwise too complicated for a simple tutorial.
+如果您已经熟悉 PostgreSQL 的使用并在本地有安装，可以直接使用现有的数据库。在本教程中，我们将介绍如何在 Docker 中使用数据库，否则数据库配置对于简单的教程来说太复杂了。
 
-If Docker is not installed, you can get it `here <https://www.docker.com/community-edition#download>`_. Next, let's pull and start the database image:
+如果你没有安装 Docker 可以点 `这里 <https://www.docker.com/community-edition#download>`_. 安装好了之后，让我们来拉去并启动数据库的镜像:
 
 .. code-block:: bash
 
@@ -33,14 +33,14 @@ If Docker is not installed, you can get it `here <https://www.docker.com/communi
                   -e POSTGRES_PASSWORD=mysecretpassword \
                   -d postgres
 
-This will run the Docker instance as a daemon and expose port 5432 to the host system so that it looks like an ordinary PostgreSQL server to the rest of the system.
+以上操作会以守护进程方式运行 Docker 实例并且暴露一个 5432 端来供你访问 PostgreSQL server。
 
 Step 3. 安装 PostgREST
 -------------------------
 
-PostgREST is distributed as a single binary, with versions compiled for major distributions of Linux/BSD/Windows. Visit the `latest release <https://github.com/begriffs/postgrest/releases/latest>`_ for a list of downloads. In the event that your platform is not among those already pre-built, see :ref:`build_source` for instructions how to build it yourself. Also let us know to add your platform in the next release.
+PostgREST 是作为一个单独的二进制文件发布的，支持 Linux/BSD/Windows 的主要发行版。访问 `最新版本 <https://github.com/begriffs/postgrest/releases/latest>`_ 以获取下载列表。如果您的平台不是预先构建的平台，请参阅 :ref:`build_source` 以获取有关如何自行构建的说明。也可以通知我们在下一个版本中添加您的平台。
 
-The pre-built binaries for download are :code:`.tar.xz` compressed files (except Windows which is a zip file). To extract the binary, go into the terminal and run
+用于下载的二进制文件是 :code:`.tar.xz` 压缩文件（除了 Windows 是 zip 文件）。 要提取二进制文件，进入终端并运行
 
 .. code-block:: bash
 
@@ -48,17 +48,17 @@ The pre-built binaries for download are :code:`.tar.xz` compressed files (except
 
   tar xfJ postgrest-<version>-<platform>.tar.xz
 
-The result will be a file named simply :code:`postgrest` (or :code:`postgrest.exe` on Windows). At this point try running it with
+你会得到一个名为 :code:`postgrest` (Windows 上是 :code:`postgrest.exe`) 的文件. 到了这一步，可以尝试运行
 
 .. code-block:: bash
 
   ./postgrest
 
-If everything is working correctly it will print out its version and information about configuration. You can continue to run this binary from where you downloaded it, or copy it to a system directory like :code:`/usr/local/bin` on Linux so that you will be able to run it from any directory.
+如果一切正常，它将打印出有关配置的版本和信息。您可以继续从您下载的文件目录运行它，也可以将其复制到系统目录，如 Linux上 的 :code:`/usr/local/bin` ，以便您可以从任何目录运行它。
 
 .. note::
 
-  PostgREST requires libpq, the PostgreSQL C library, to be installed on your system. Without the library you'll get an error like "error while loading shared libraries: libpq.so.5." Here's how to fix it:
+  PostgREST 依赖 libpq （PostgreSQL 的 C 语言库）的安装。没有这个库的话你会获得一个形如 "error while loading shared libraries: libpq.so.5." 的报错，以下是解决方案:
 
   .. raw:: html
 
@@ -91,13 +91,13 @@ If everything is working correctly it will print out its version and information
 Step 4. 为 API 创建数据库
 -------------------------------
 
-Connect to to SQL console (psql) inside the container. To do so, run this from your command line:
+为了连上容器内的 SQL 控制台 (psql)，你需要运行如下命令:
 
 .. code-block:: bash
 
   sudo docker exec -it tutorial psql -U postgres
 
-You should see the psql command prompt:
+你应该看到了 psql 的命令行提示:
 
 ::
 
@@ -106,13 +106,13 @@ You should see the psql command prompt:
 
   postgres=#
 
-The first thing we'll do is create a `named schema <https://www.postgresql.org/docs/current/static/ddl-schemas.html>`_ for the database objects which will be exposed in the API. We can choose any name we like, so how about "api." Execute this and the other SQL statements inside the psql prompt you started.
+我们要做的第一件事是为要暴露在 API 中的数据库对象创建一个 `命名的 schema <https://www.postgresql.org/docs/current/static/ddl-schemas.html>`_。我们可以使用任何我们喜欢的名称，那么就叫 "api" 怎么样。在你刚刚启动的命令行工具内执行该操作：
 
 .. code-block:: postgres
 
   create schema api;
 
-Our API will have one endpoint, :code:`/todos`, which will come from a table.
+我们的 API 准备通过表来设置一个端点 :code:`/todos`。
 
 .. code-block:: postgres
 
@@ -126,7 +126,7 @@ Our API will have one endpoint, :code:`/todos`, which will come from a table.
   insert into api.todos (task) values
     ('finish tutorial 0'), ('pat self on back');
 
-Next make a role to use for anonymous web requests. When a request comes in, PostgREST will switch into this role in the database to run queries.
+接下来，创建一个角色来用于进行匿名的 web 请求。当一个请求进来，PostgREST 会在数据库中切换到该角色进行查询。
 
 .. code-block:: postgres
 
@@ -136,18 +136,18 @@ Next make a role to use for anonymous web requests. When a request comes in, Pos
   grant usage on schema api to web_anon;
   grant select on api.todos to web_anon;
 
-The :code:`web_anon` role has permission to access things in the :code:`api` schema, and to read rows in the :code:`todos` table.
+:code:`web_anon` 角色拥有访问 :code:`api` schema 的权限，可以读取 :code:`todos` 表中的数据（rows）。
 
-Now quit out of psql; it's time to start the API!
+现在可以退出 psql， 是时候开始使用 API 了！
 
 .. code-block:: psql
 
   \q
 
 Step 5. 运行 PostgREST
----------------------
+----------------------
 
-PostgREST uses a configuration file to tell it how to connect to the database. Create a file :code:`tutorial.conf` with this inside:
+PostgREST 使用一个配置文件来确定如何连接数据库。创建一个文件 :code:`tutorial.conf` 并加上如下内容:
 
 .. code-block:: ini
 
@@ -155,13 +155,13 @@ PostgREST uses a configuration file to tell it how to connect to the database. C
   db-schema = "api"
   db-anon-role = "web_anon"
 
-The configuration file has other :ref:`options <configuration>`, but this is all we need. Now run the server:
+详细配置内容参见 :ref:`options <configuration>`。现在可以运行服务器:
 
 .. code-block:: bash
 
   ./postgrest tutorial.conf
 
-You should see
+你应该看到
 
 .. code-block:: text
 
@@ -169,13 +169,13 @@ You should see
   Attempting to connect to the database...
   Connection successful
 
-It's now ready to serve web requests. There are many nice graphical API exploration tools you can use, but for this tutorial we'll use :code:`curl` because it's likely to be installed on your system already. Open a new terminal (leaving the one open that PostgREST is running inside). Try doing an HTTP request for the todos.
+现在可以进行 web 请求了。市面上有很多可以用的图形化 API 请求工具，不过在本教程内我们使用 :code:`curl`。打开一个新的 terminal (保持 PostgREST 依旧运行)。尝试对 todos 做一个 HTTP 请求。
 
 .. code-block:: bash
 
   curl http://localhost:3000/todos
 
-The API replies:
+API 返回:
 
 .. code-block:: json
 
@@ -194,7 +194,7 @@ The API replies:
     }
   ]
 
-With the current role permissions, anonymous requests have read-only access to the :code:`todos` table. If we try to add a new todo we are not able.
+通过当前的角色权限，匿名请求有 :code:`todos` 表的只读权限。如果我们试图添加一个新的 todo 会被拒绝。
 
 .. code-block:: bash
 
@@ -202,7 +202,7 @@ With the current role permissions, anonymous requests have read-only access to t
        -H "Content-Type: application/json" \
        -d '{"task": "do bad thing"}'
 
-Response is 401 Unauthorized:
+响应是 401 Unauthorized:
 
 .. code-block:: json
 
@@ -213,4 +213,4 @@ Response is 401 Unauthorized:
     "message": "permission denied for relation todos"
   }
 
-There we have it, a basic API on top of the database! In the next tutorials we will see how to extend the example with more sophisticated user access controls, and more tables and queries.
+There we have it, a basic API on top of the database! 在下一篇教程中，我们将会看到如何拓展这个例子，使用更复杂的用户访问控制，以及更多的表和查询。
