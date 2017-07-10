@@ -3,12 +3,12 @@
 Tutorial 1 - 金钥匙
 ===========================
 
-In :ref:`tut0` we created a read-only API with a single endpoint to list todos. There are many directions we can go to make this API more interesting, but one good place to start would be allowing some users to change data in addition to reading it.
+在 :ref:`tut0` 中我们创建了一个获取 todos 数据只读的 API。使用单个端点列出 todos。 我们有很多办法可以使这个 API 更有趣，但一个好的开始是允许一些用户更改数据，而不仅仅是查询。
 
 Step 1. 添加一个受信的用户
 --------------------------
 
-The previous tutorial created a :code:`web_anon` role in the database with which to execute anonymous web requests. Let's make a role called :code:`todo_user` for users who authenticate with the API. This role will have the authority to do anything to the todo list.
+上一节中，进行匿名 Web 请求的事后在数据库中创建了一个 :code:`web_anon` 角色。让我们在创建一个角色叫做 :code:`todo_user` 用于使用 API 进行身份验证的用户，这个角色将有权对 todo list 做任何事情。
 
 .. code-block:: postgres
 
@@ -25,19 +25,19 @@ The previous tutorial created a :code:`web_anon` role in the database with which
 Step 2. 生成一个密码
 ---------------------
 
-Clients authenticate with the API using JSON Web Tokens. These are JSON objects which are cryptographically signed using a password known to only us and the server. Because clients do not know the password, they cannot tamper with the contents of their tokens. PostgREST will detect counterfeit tokens and will reject them.
+客户端通过 API 使用 JSON Web Token 进行身份验证。JTW 是使用仅有我们和服务器知道的密码进行加密签名的 JSON 对象。 由于客户端不知道密码，所以不能篡改 token 的内容。 PostgREST 会检测伪造的 token 并拒绝它们。
 
-Let's create a password and provide it to PostgREST. Think of a nice long one, or use a tool to generate it.
+我们来创建一个密码并提供给 PostgREST。最好想想一个复杂的长一点的，或使用一个工具来生成它。
 
 .. note::
 
-  The `OpenSSL toolkit <https://www.openssl.org/>`_ provides an easy way to generate a secure password. If you have it installed, run
+  `OpenSSL toolkit <https://www.openssl.org/>`_ 提个一个简单的方式来生成安全的密码。如果你有安装，运行
 
   .. code-block:: bash
 
     openssl rand -base64 32
 
-Open the :code:`tutorial.conf` (created in the previous tutorial) and add a line with the password:
+打开 :code:`tutorial.conf` (在上一节中创建的) 并将密码添加在新的一行:
 
 .. code-block:: ini
 
@@ -45,28 +45,28 @@ Open the :code:`tutorial.conf` (created in the previous tutorial) and add a line
 
   jwt-secret = "<the password you created>"
 
-If the PostgREST server is still running from the previous tutorial, restart it to load the updated configuration file.
+如果 PostgREST server 仍旧在运行中，那么需要重启它以便加载最新的配置文件。
 
 Step 3. 生成 token
 --------------------
 
-Ordinarily your own code in the database or in another server will create and sign authentication tokens, but for this tutorial we will make one "by hand." Go to `jwt.io <https://jwt.io/#debugger-io>`_ and fill in the fields like this:
+通常你自己的代码在数据库或其他服务器中将创建并签署身份验证 token，但是在本教程中，我们将“自己动手”。跳转到 `jwt.io <https://jwt.io/#debugger-io>`_，并填写如下字段：
 
 .. figure:: ../_static/tuts/tut1-jwt-io.png
    :alt: jwt.io interface
 
-   How to create a token at https://jwt.io
+   如何在 https://jwt.io 创建 Token
 
-Remember to fill in the password you generated rather than the word :code:`secret`. After you have filled in the password and payload, the encoded data on the left will update. Copy the encoded token.
+请记住您填写的密码，而不是图片里的 :code:`secret`。填写密码和 payload 之后，左侧的编码数据会刷新，该数据即 token 复制它。
 
 .. note::
 
-  While the token may look well obscured, it's easy to reverse engineer the payload. The token is merely signed, not encrypted, so don't put things inside that you don't want a determined client to see.
+  虽然令牌可能看起来很模糊，但很容易逆向出的 payload。token 仅仅是被签名，没有加密，所以如果你有不想让客户端看到的信息请不要放在里面。
 
 Step 4. 进行请求
 ----------------------
 
-Back in the terminal, let's use :code:`curl` to add a todo. The request will include an HTTP header containing the authentication token.
+回到 terminal，我们来用 :code:`curl` 添加一个 todo。该请求将包括一个包含身份验证 token 的 HTTP 头。
 
 .. code-block:: bash
 
@@ -77,7 +77,7 @@ Back in the terminal, let's use :code:`curl` to add a todo. The request will inc
        -H "Content-Type: application/json" \
        -d '{"task": "learn how to auth"}'
 
-And now we have completed all three items in our todo list, so let's set :code:`done` to true for them all with a :code:`PATCH` request.
+现在我们已经完成了我们的 todo list 中的所有三个项目，所以我们通过 :code:`PATCH` 请求将他们全设置为 :code:`done`。
 
 .. code-block:: bash
 
@@ -86,7 +86,7 @@ And now we have completed all three items in our todo list, so let's set :code:`
        -H "Content-Type: application/json"  \
        -d '{"done": true}'
 
-A request for the todos shows three of them, and all completed.
+请求一下 todo 看看这三项，全部都已完成了.
 
 .. code-block:: bash
 
@@ -118,9 +118,9 @@ A request for the todos shows three of them, and all completed.
 Step 4. 添加过期时间
 ----------------------
 
-Currently our authentication token is valid for all eternity. The server, as long as it continues using the same JWT password, will honor the token.
+目前，我们的认证 token 对于所有请求都是一致有效的。服务器只要继续使用相同的 JWT 密码，就会通过验证。
 
-It's better policy to include an expiration timestamp for tokens using the :code:`exp` claim. This is one of two JWT claims that PostgREST treats specially.
+更好的策略是让 token 使用 :code:`exp` 声明一个过期时间戳。这是 PostgREST 特别对待的两个 JWT 声明之一。
 
 +--------------+----------------------------------------------------------------+
 | Claim        | Interpretation                                                 |
@@ -132,15 +132,15 @@ It's better policy to include an expiration timestamp for tokens using the :code
 
 .. note::
 
-  Epoch time is defined as the number of seconds that have elapsed since 00:00:00 Coordinated Universal Time (UTC), January 1st 1970, minus the number of leap seconds that have taken place since then.
+  Unix 时间戳 (Unix epoch time) 被定义为自 1970 年 1 月 1 日 00:00:00 协调世界时（UTC）以来到现在的总秒数，不考虑闰秒。
 
-To observe expiration in action, we'll add an :code:`exp` claim of five minutes in the future to our previous token. First find the epoch value of five minutes from now. In psql run this:
+为了在行动中观察过期，我们将添加一个在 5min 之后过期的 :code:`exp` 声明。首先找到从当前时间算起到 5min 之后的时间戳。 在 psql 中运行：
 
 .. code-block:: postgres
 
   select extract(epoch from now() + '5 minutes'::interval) :: integer;
 
-Go back to jwt.io and change the payload to
+回到 jwt.io 并修改 payload
 
 .. code-block:: json
 
@@ -149,20 +149,20 @@ Go back to jwt.io and change the payload to
     "exp": "<computed epoch value>"
   }
 
-Copy the updated token as before, and save it as a new environment variable.
+拷贝新的 token，然后将其保存为一个新的环境变量。
 
 .. code-block:: bash
 
   export NEW_TOKEN="<paste new token>"
 
-Try issuing this request in curl before and after the expiration time:
+尝试在过期时间的前后使用 curl 进行该请求:
 
 .. code-block:: bash
 
   curl http://localhost:3000/todos \
        -H "Authorization: Bearer $NEW_TOKEN"
 
-After expiration, the API returns HTTP 401 Unauthorized:
+过期以后, 该 API 会返回一个 HTTP 401 Unauthorized:
 
 .. code-block:: json
 

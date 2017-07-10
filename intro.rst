@@ -132,4 +132,4 @@ Production
 获得支持
 ################
 
-该项目有一个友好且不断成长的社区。加入我们的`聊天室 <https://gitter.im/begriffs/postgrest>`_ 来讨论和求助。同时你也可以在 Github 的 `issues <https://github.com/begriffs/postgrest/issues>`_ 上搜索 bugs/features。
+该项目有一个友好且不断成长的社区。加入我们的 `聊天室 <https://gitter.im/begriffs/postgrest>`_ 来讨论和求助。同时你也可以在 Github 的 `issues <https://github.com/begriffs/postgrest/issues>`_ 上搜索 bugs/features。
