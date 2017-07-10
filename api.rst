@@ -373,7 +373,7 @@ Once again, this restricts the roles included to certain characters but does not
 The PostgREST URL grammar limits the kinds of queries clients can perform. It prevents arbitrary, potentially poorly constructed and slow client queries. It's good for quality of service, but means database administrators must create custom views and stored procedures to provide richer endpoints. The most common causes for custom endpoints are
 
 * Table unions and OR-conditions in the where clause
-* More complicated joins than those provided by `Resource Embedding`_
+* More complicated joins than those provided by `资源嵌套`_
 * Geospatial queries that require an argument, like "points near (lat,lon)"
 * More sophisticated full-text search than a simple use of the :sql:`@@` filter
 

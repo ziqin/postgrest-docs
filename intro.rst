@@ -123,13 +123,6 @@ Production
 
   -- Louis Brauer
 
-  "I really enjoyed the fact that all of a sudden I was writing
-  microservices in SQL DDL (and v8 javascript functions). I dodged so
-  much boilerplate. The next thing I knew, we pulled out a full rewrite
-  of a Spring+MySQL legacy app in 6 months. Literally 10x faster, and
-  code was super concise. The old one took 3 years and a team of 4
-  people to develop."
-
   "我非常喜欢这样一个事实，偶然使用 SQL DDL（和 V8 javascript）开发微服务。
   我们在 6 个月内完全重写了一个 Spring + MySQL 遗留应用程序。 
   速度快 10 倍，代码很简洁。而之前的人用了 4 个人花了 3 年时间。"

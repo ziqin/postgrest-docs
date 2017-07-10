@@ -1,17 +1,17 @@
 可执行文件
 ==============
 
-[ `Download from release page <https://github.com/begriffs/postgrest/releases/latest>`_ ]
+[ `下载页 <https://github.com/begriffs/postgrest/releases/latest>`_ ]
 
-The release page has precompiled binaries for Mac OS X, Windows, and several Linux distros. Extract the tarball and run the binary inside with the :code:`--help` flag to see usage instructions:
+下载页面具有 Mac OS X、Windows 和几个 Linux 发行版的预编译文件。解压之后可以运行可执行文件加 :code:`--help` 标志来查看使用说明:
 
 .. code-block:: bash
 
-  # Untar the release (available at https://github.com/begriffs/postgrest/releases/latest)
+  # 解压 tar 包 (available at https://github.com/begriffs/postgrest/releases/latest)
 
   $ tar Jxf postgrest-[version]-[platform].tar.xz
 
-  # Try running it
+  # 尝试运行
   $ ./postgrest --help
 
   # You should see a usage help message
@@ -19,22 +19,22 @@ The release page has precompiled binaries for Mac OS X, Windows, and several Lin
 Homebrew
 ========
 
-You can use the Homebrew package manager to install PostgREST on Mac
+在 Mac 上你可以使用 Homebrew 来安装 PostgREST
 
 .. code-block:: bash
 
-  # Ensure brew is up to date
+  # 确保 brew 是最新的
   brew update
 
-  # Check for any problems with brew's setup
+  # 检查 brew 的 setup 有没问题
   brew doctor
 
-  # Install the postgrest package
+  # 安装 postgrest
   brew install postgrest
 
-This will automatically install PostgreSQL as a dependency. The process tends to take up to 15 minutes to install the package and its dependencies.
+该命令会自动将 PostgreSQL 当做依赖安装. 该过程往往需要长达15分钟才能安装软件包及其依赖。
 
-After installation completes, the tool is added to your $PATH and can be used from anywhere with:
+安装完成后，该工具会被添加到 $PATH 中，你可以在任意位置使用：
 
 .. code-block:: bash
 
@@ -43,11 +43,11 @@ After installation completes, the tool is added to your $PATH and can be used fr
 PostgreSQL 依赖
 =====================
 
-To use PostgREST you will need an underlying database (PostgreSQL version 9.3 or greater is required). You can use something like Amazon `RDS <https://aws.amazon.com/rds/>`_ but installing your own locally is cheaper and more convenient for development.
+要使用 PostgREST 您将需要安装数据库（PostgreSQL 9.3 或更高版本）。 您可以使用像 Amazon `RDS <https://aws.amazon.com/rds/>`_ 这样的东西，但是在本地安装本身比较便宜，更便于开发。
 
-* `Instructions for OS X <http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/>`_
-* `Instructions for Ubuntu 14.04 <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04>`_
-* `Installer for Windows <http://www.enterprisedb.com/products-services-training/pgdownload#windows>`_
+* `OS X 说明 <http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/>`_
+* `Ubuntu 14.04 说明 <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04>`_
+* `Windows 安装包 <http://www.enterprisedb.com/products-services-training/pgdownload#windows>`_
 
 .. _build_source:
 
@@ -56,12 +56,12 @@ To use PostgREST you will need an underlying database (PostgreSQL version 9.3 or
 
 .. note::
 
-  We discourage building and using PostgREST on **Alpine Linux** because of a reported GHC memory leak on that platform.
+  我们不建议在 **Alpine Linux** 上构建和使用 PostgREST，因为在该平台有过 GHC 内存泄漏的报告。
 
-When a pre-built binary does not exist for your system you can build the project from source. You'll also need to do this if you want to help with development. `Stack <https://github.com/commercialhaskell/stack>`_ makes it easy. It will install any necessary Haskell dependencies on your system.
+当您的系统没有预构建的可执行文件时，可以从源代码构建项目。如果您想帮助开发，您还需要这种操作操作：`安装 Stack <https://github.com/commercialhaskell/stack>`_ 。它将在您的系统上安装任何必要的 Haskell 依赖。
 
-* `Install Stack <http://docs.haskellstack.org/en/stable/README.html#how-to-install>`_ for your platform
-* Install Library Dependencies
+* `安装 Stack <http://docs.haskellstack.org/en/stable/README.html#how-to-install>`_
+* 安装依赖库
 
   =====================  =======================================
   Operating System       Dependencies
@@ -72,7 +72,7 @@ When a pre-built binary does not exist for your system you can build the project
   OS X                   postgresql, gmp
   =====================  =======================================
 
-* Build and install binary
+* 构建并安装
 
   .. code-block:: bash
 
@@ -84,9 +84,9 @@ When a pre-built binary does not exist for your system you can build the project
 
 .. note::
 
-   If building fails and your system has less than 1GB of memory, try adding a swap file.
+   如果你构建失败，而且你的系统只有不到 1GB 内存，尝试添加一个 swap 文件。
 
-* Check that the server is installed: :code:`postgrest --help`.
+* 检查安装是否成功: :code:`postgrest --help`.
 
 PostgREST 测试套件
 --------------------
