@@ -1,43 +1,43 @@
-Motivation
+动机
 ##########
 
-PostgREST is a standalone web server that turns your PostgreSQL database directly into a RESTful API. The structural constraints and permissions in the database determine the API endpoints and operations.
+PostgREST 是一个独立的 Web 服务器，可为您的 PostgreSQL 数据库直接生成 RESTful API。 数据库中的结构约束和权限决定了 API 的端点（endpoints）和操作。
 
-Using PostgREST is an alternative to manual CRUD programming. Custom API servers suffer problems. Writing business logic often duplicates, ignores or hobbles database structure. Object-relational mapping is a leaky abstraction leading to slow imperative code. The PostgREST philosophy establishes a single declarative source of truth: the data itself.
+PostgREST 是手动编写 CRUD 的替代方案。通常的 API 服务器普遍遇到遇到一个问题。那就是编写业务逻辑往往会重复劳动，并且对于数据结构存在疏漏。对象关系（Object-relational）映射是一种存疑（leaky）的抽象，可能导致产生低效的代码。PostgREST 哲学建立了一个单一的声明性真理来源————数据本身。
 
-Declarative Programming
+声明性变成
 -----------------------
 
-It's easier to ask PostgreSQL to join data for you and let its query planner figure out the details than to loop through rows yourself. It's easier to assign permissions to db objects than to add guards in controllers. (This is especially true for cascading permissions in data dependencies.) It's easier to set constraints than to litter code with sanity checks.
+比起对着查询结果重复劳动，让查询计划理清细节使 PostgreSQL 为您添加数据是一件更容易的事。为数据库对象分配权限比在控制器（controllers）中添加保护更容易（这对于数据依赖关系中的级联权限尤其如此）。并且设置约束比编写重复代码进行健全检查更容易。
 
-Leak-proof Abstraction
+Leak-proof 抽象
 ----------------------
 
-There is no ORM involved. Creating new views happens in SQL with known performance implications. A database administrator can now create an API from scratch with no custom programming.
+没有 ORM 参与。创建 SQL 性能提示的视图。数据库管理员（DA）现在可以自行创建 API，无需开发参与。
 
-Embracing the Relational Model
+拥抱关系模型
 ------------------------------
 
-In 1970 E. F. Codd criticized the then-dominant hierarchical model of databases in his article A Relational Model of Data for Large Shared Data Banks. Reading the article reveals a striking similarity between hierarchical databases and nested http routes. With PostgREST we attempt to use flexible filtering and embedding rather than nested routes.
+1970年，E. F. Codd 在他的文章 “大型共享数据库数据关系模型” 中批评了当时主导的数据库分层模型。于都文章会发现层次数据库和嵌套 http 路由之间存在惊人相似性。而在 PostgREST 中，我们尝试使用灵活的过滤和嵌入，而不是嵌套路由。
 
-One Thing Well
+一个重点
 --------------
 
-PostgREST has a focused scope. It works well with other tools like Nginx. This forces you to cleanly separate the data-centric CRUD operations from other concerns. Use a collection of sharp tools rather than building a big ball of mud.
+PostgREST 有一个重要的特点。它适用于如 Nginx 的工具。这可以强行将以数据为中心的 CRUD 操作与其他问题进行干净分离。
 
-Shared Improvements
+改进共享
 -------------------
 
-As with any open source project, we all gain from features and fixes in the tool. It's more beneficial than improvements locked inextricably within custom code-bases.
+与任何开源项目一样，我们都可以从工具中的功能和修复中获益。这比在各自私有库中耦合的改进更有益处。
 
-Ecosystem
+生态系统
 #########
 
-PostgREST has a growing ecosystem of examples, and libraries, experiments, and users. Here is a selection.
+PostgREST 具有不断增长的生态系统，示例、库、实验和用户。这是一个选择。
 
 .. _clientside_libraries:
 
-Client-Side Libraries
+客户端库
 ---------------------
 
 * `tomberek/aor-postgrest-client <https://github.com/tomberek/aor-postgrest-client>`_ - JS, admin-on-rest
@@ -52,10 +52,10 @@ Client-Side Libraries
 * `PierreRochard/postgrest-angular <https://github.com/PierreRochard/postgrest-angular>`_ - TypeScript, generate UI from API description
 * `thejettdurham/postgrest-sharp-client <https://github.com/thejettdurham/postgrest-sharp-client>`_ (needs maintainer) - C#, RestSharp
 
-External Notification
+额外通知
 ---------------------
 
-These are PostgreSQL bridges that propagate LISTEN/NOTIFY to external queues for further processing. This allows stored procedures to initiate actions outside the database such as sending emails.
+在于外部交互上（LISTEN/NOTIFY）PostgreSQL 有拓展到外部队列进行进一步处理的网桥。这允许存储过程在数据库外发起动作，例如发送电子邮件。
 
 * `frafra/postgresql2websocket <https://github.com/frafra/postgresql2websocket>`_ - Websockets
 * `matthewmueller/pg-bridge <https://github.com/matthewmueller/pg-bridge>`_ - Amazon SNS
@@ -63,7 +63,7 @@ These are PostgreSQL bridges that propagate LISTEN/NOTIFY to external queues for
 * `SpiderOak/skeeter <https://github.com/SpiderOak/skeeter>`_ - ZeroMQ
 * `FGRibreau/postgresql-to-amqp <https://github.com/FGRibreau/postgresql-to-amqp>`_ - AMQP
 
-Example Apps
+示例应用
 ------------
 
 * `subzerocloud/postgrest-starter-kit <https://github.com/subzerocloud/postgrest-starter-kit>`_ - Boilerplate for new project
@@ -83,7 +83,7 @@ Example Apps
 * `SMRxT/postgrest-demo <https://github.com/SMRxT/postgrest-demo>`_ - multi-tenant logging system
 * `PierreRochard/postgrest-boilerplate <https://github.com/PierreRochard/postgrest-boilerplate>`_ - example auth backend
 
-In Production
+Production
 -------------
 
 * `Catarse <https://www.catarse.me/>`_
@@ -95,7 +95,7 @@ In Production
 * `Convene <https://info.convene.thomsonreuters.com/en.html>`_ by Thomson-Reuters
 * `eGull <http://www.egull.co>`_
 
-Extensions
+拓展
 ----------
 
 * `ppKrauss/PostgREST-writeAPI <https://github.com/ppKrauss/PostgREST-writeAPI>`_ - generate Nginx rewrite rules to fit an OpenAPI spec
@@ -105,22 +105,21 @@ Extensions
 * `svmnotn/postgrest-auth <https://github.com/svmnotn/postgrest-auth>`_ - OAuth2-inspired external auth server
 * `nblumoe/postgrest-oauth <https://github.com/nblumoe/postgrest-oauth>`_ - OAuth2 WAI middleware
 
-Commercial
+广告
 ---------------
 
 * `subZero <https://subzero.cloud/>`_ - Automated GraphQL & REST API with built-in caching (powered in part by PostgREST)
 
-Testimonials
+赞誉
 ############
 
-  "It's so fast to develop, it feels like cheating!"
+  "开发起来太快了, 感觉就像在作弊!"
 
   -- François-G. Ribreau
 
-  "I just have to say that, the CPU/Memory usage compared to our
-  Node.js/Waterline ORM based API is ridiculous.  It's hard to even push
-  it over 60/70 MB while our current API constantly hits 1GB running on 6
-  instances (dynos)."
+  "我不得不说, 与 Node.js/Waterline ORM 构建的 API 对比
+   CPU/Memory usage 简直是难以置信. 当我们在 6 个示例 （dynos）
+   持续求情 1GB 数据是它甚至只有 60/70 MB 大小."
 
   -- Louis Brauer
 
@@ -131,9 +130,13 @@ Testimonials
   code was super concise. The old one took 3 years and a team of 4
   people to develop."
 
+  "我非常喜欢这样一个事实，偶然使用 SQL DDL（和 V8 javascript）开发微服务。
+  我们在 6 个月内完全重写了一个 Spring + MySQL 遗留应用程序。 
+  速度快 10 倍，代码很简洁。而之前的人用了 4 个人花了 3 年时间。"
+
   -- Simone Scarduzio
 
-Getting Support
+获得支持
 ################
 
-The project has a friendly and growing community. Join our `chat room <https://gitter.im/begriffs/postgrest>`_ for discussion and help. You can also report or search for bugs/features on the Github `issues <https://github.com/begriffs/postgrest/issues>`_ page.
+该项目有一个友好且不断成长的社区。加入我们的`聊天室 <https://gitter.im/begriffs/postgrest>`_ 来讨论和求助。同时你也可以在 Github 的 `issues <https://github.com/begriffs/postgrest/issues>`_ 上搜索 bugs/features。
