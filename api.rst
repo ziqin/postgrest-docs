@@ -1,7 +1,7 @@
 .. role:: sql(code)
    :language: sql
 
-Tables and Views
+表 & 视图
 ================
 
 All views and tables in the active schema and accessible by the active database role for a request are available for querying. They are exposed in one-level deep routes. For instance the full contents of a table `people` is returned at
@@ -18,7 +18,7 @@ There are no deeply/nested/routes. Each route provides OPTIONS, GET, POST, PATCH
 
 .. _h_filter:
 
-Horizontal Filtering (Rows)
+水平过滤 (Rows)
 ---------------------------
 
 You can filter result rows by adding conditions on columns, each condition a query string parameter. For instance, to return people aged under 13 years old:
@@ -80,7 +80,7 @@ The view will provide a new endpoint:
 
 .. _v_filter:
 
-Vertical Filtering (Columns)
+垂直过滤 (Columns)
 ----------------------------
 
 When certain columns are wide (such as those holding binary data), it is more efficient for the server to withold them in a response. The client can specify which columns are required using the :sql:`select` parameter.
@@ -93,7 +93,7 @@ The default is :sql:`*`, meaning all columns. This value will become more import
 
 .. _computed_cols:
 
-Computed Columns
+计算列
 ~~~~~~~~~~~~~~~~
 
 Filters may be applied to computed columns as well as actual table/view columns, even though the computed columns will not appear in the output. For example, to search first and last names at once we can create a computed column that will not appear in the output but can be used in a filter:
@@ -125,7 +125,7 @@ As mentioned, computed columns do not appear in the output by default. However y
 
   GET /people?select=*,full_name HTTP/1.1
 
-Ordering
+排序
 --------
 
 The reserved word :sql:`order` reorders the response rows. It uses a comma-separated list of columns and directions:
@@ -154,7 +154,7 @@ You can also use :ref:`computed_cols` to order the results, even though the comp
 
 .. _limits:
 
-Limits and Pagination
+Limit 和分页
 ---------------------
 
 PostgREST uses HTTP range headers to describe the size of results. Every response contains the current range and, if requested, the total number of results:
@@ -211,7 +211,7 @@ Note that the larger the table the slower this query runs in the database. The s
   Range-Unit: items
   Content-Range: 0-24/3573458
 
-Response Format
+相应格式
 ---------------
 
 PostgREST uses proper HTTP content negotiation (`RFC7231 <https://tools.ietf.org/html/rfc7231#section-5.3>`_) to deliver the desired representation of a resource. That is to say the same API endpoint can respond in different formats like JSON or CSV depending on the client request.
@@ -235,7 +235,7 @@ The server will default to JSON for API endpoints and OpenAPI on the root.
 
 .. _singular_plural:
 
-Singular or Plural
+单数或复数
 ------------------
 
 By default PostgREST returns all JSON results in an array, even when there is only one item. For example, requesting :code:`/items?id=eq.1` returns
@@ -267,7 +267,7 @@ When a singular response is requested but no entries are found, the server respo
 
   Admittedly PostgREST could detect when there is an equality condition holding on all columns constituting the primary key and automatically convert to singular. However this could lead to a surprising change of format that breaks unwary client code just by filtering on an extra column. Instead we allow manually specifying singular vs plural to decouple that choice from the URL format.
 
-Binary output
+二进制输出
 -------------
 
 If you want to return raw binary data from a :code:`bytea` column, you must specify :code:`application/octet-stream` as part of the :code:`Accept` header
@@ -284,7 +284,7 @@ and select a single column :code:`?select=bin_data`.
 
 .. _resource_embedding:
 
-Resource Embedding
+资源嵌套
 ==================
 
 In addition to providing RESTful routes for each table and view, PostgREST allows related resources to be included together in a single API call. This reduces the need for multiple API requests. The server uses foreign keys to determine which tables and views can be returned together. For example, consider a database of films and their awards:
@@ -349,7 +349,7 @@ PostgREST can also detect relations going through join tables. Thus you can requ
 
   Whenever foreign key relations change in the database schema you must refresh PostgREST's schema cache to allow resource embedding to work properly. See the section :ref:`schema_reloading`.
 
-Embedded Filters and Order
+嵌入过滤和排序
 --------------------------
 
 Embedded tables can be filtered and ordered similarly to their top-level counterparts. To do so, prefix the query parameters with the name of the embedded table. For instance, to order the actors in each film:
@@ -367,7 +367,7 @@ This sorts the list of actors in each film but does *not* change the order of th
 Once again, this restricts the roles included to certain characters but does not filter the films in any way. Films without any of those characters would be included along with empty character lists.
 
 
-Custom Queries
+自定义查询
 ==============
 
 The PostgREST URL grammar limits the kinds of queries clients can perform. It prevents arbitrary, potentially poorly constructed and slow client queries. It's good for quality of service, but means database administrators must create custom views and stored procedures to provide richer endpoints. The most common causes for custom endpoints are
@@ -377,7 +377,7 @@ The PostgREST URL grammar limits the kinds of queries clients can perform. It pr
 * Geospatial queries that require an argument, like "points near (lat,lon)"
 * More sophisticated full-text search than a simple use of the :sql:`@@` filter
 
-Stored Procedures
+存储过程
 =================
 
 Every stored procedure in the API-exposed database schema is accessible under the :code:`/rpc` prefix. The API endpoint supports only POST which executes the function.
@@ -435,7 +435,7 @@ By default, a function is executed with the privileges of the user who calls it.
 
   We are considering allowing GET requests for functions that are marked non-volatile. Allowing GET is important for HTTP caching. However we still must decide how to pass function parameters since request bodies are not allowed. Also some query string arguments are already reserved for shaping/filtering the output.
 
-Accessing Request Headers/Cookies
+获取请求的 Headers/Cookies
 ---------------------------------
 
 Stored procedures can access request headers and cookies by reading GUC variables set by PostgREST per request. They are named :code:`request.header.XYZ` and :code:`request.cookie.XYZ`. For example, to read the value of the Origin request header:
@@ -444,7 +444,7 @@ Stored procedures can access request headers and cookies by reading GUC variable
 
   SELECT current_setting('request.header.origin', true);
 
-Complex boolean logic
+复杂布尔逻辑
 ---------------------
 
 For complex boolean logic you can use stored procedures, an example:
@@ -463,7 +463,7 @@ Then you can query by doing:
 
   { "country": "Germany", "company": "Volkswagen", salary": 120000.00 }
 
-Raising Errors
+抛出错误
 --------------
 
 Stored procedures can return non-200 HTTP status codes by raising SQL exceptions. For instance, here's a saucy function that always errors:
@@ -493,7 +493,7 @@ Calling the function returns HTTP 400 with the body
 
 You can customize the HTTP status code by raising particular exceptions according to the PostgREST :ref:`error to status code mapping <status_codes>`. For example, :code:`RAISE insufficient_privilege` will respond with HTTP 401/403 as appropriate.
 
-Insertions / Updates
+插入/修改
 ====================
 
 All tables and `auto-updatable views <https://www.postgresql.org/docs/current/static/sql-createview.html#SQL-CREATEVIEW-UPDATABLE-VIEWS>`_ can be modified through the API, subject to permissions of the requester's database role.
@@ -538,7 +538,7 @@ Updates also support :code:`Prefer: return=representation` plus :ref:`v_filter`.
 
   Beware of accidentally updating every row in a table. To learn to prevent that see :ref:`block_fulltable`.
 
-Bulk Insert
+批量插入
 -----------
 
 Bulk insert works exactly like single row insert except that you provide either a JSON array of objects having uniform keys, or lines in CSV format. This not only minimizes the HTTP requests required but uses a single INSERT statement on the backend for efficiency. Note that using CSV requires less parsing on the server and is much faster.
@@ -568,7 +568,7 @@ To bulk insert JSON post an array of objects having all-matching keys
     { "name": "Janus", "age": 10, "height": 55 }
   ]
 
-Deletions
+删除
 =========
 
 To delete rows in a table, use the DELETE verb plus :ref:`h_filter`. For instance deleting inactive users:
@@ -581,7 +581,7 @@ To delete rows in a table, use the DELETE verb plus :ref:`h_filter`. For instanc
 
   Beware of accidentally deleting all rows in a table. To learn to prevent that see :ref:`block_fulltable`.
 
-OpenAPI Support
+OpenAPI 支持
 ===============
 
 Every API hosted by PostgREST automatically serves a full `OpenAPI <https://www.openapis.org/>`_ description on the root path. This provides a list of all endpoints, along with supported HTTP verbs and example payloads.
@@ -594,7 +594,7 @@ You can use a tool like `Swagger UI <http://swagger.io/swagger-ui/>`_ to create 
 
 .. _status_codes:
 
-HTTP Status Codes
+HTTP 状态码
 =================
 
 PostgREST translates `PostgreSQL error codes <https://www.postgresql.org/docs/current/static/errcodes-appendix.html>`_ into HTTP status as follows:

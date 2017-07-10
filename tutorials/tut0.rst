@@ -16,7 +16,7 @@ PostgREST 是一个独立的 Web 服务器，为 PostgreSQL 数据库生成 REST
 Step 1. 放轻松老铁, 我们会帮你的
 -------------------------
 
-As you begin the tutorial, pop open the project `chat room <https://gitter.im/begriffs/postgrest>`_ in another tab.  There are a nice group of people active in the project and we'll help you out if you get stuck.
+在你开始这个教程时, Ctrl+T 一下在新标签中打开项目`聊天室 <https://gitter.im/begriffs/postgrest>`_. 有一群很 nice 的人在聊天室中活跃，如果你卡住了我们会帮你的。
 
 Step 2. 安装 PostgreSQL
 --------------------------

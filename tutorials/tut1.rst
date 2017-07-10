@@ -1,11 +1,11 @@
 .. _tut1:
 
-Tutorial 1 - The Golden Key
+Tutorial 1 - 金钥匙
 ===========================
 
 In :ref:`tut0` we created a read-only API with a single endpoint to list todos. There are many directions we can go to make this API more interesting, but one good place to start would be allowing some users to change data in addition to reading it.
 
-Step 1. Add a Trusted User
+Step 1. 添加一个受信的用户
 --------------------------
 
 The previous tutorial created a :code:`web_anon` role in the database with which to execute anonymous web requests. Let's make a role called :code:`todo_user` for users who authenticate with the API. This role will have the authority to do anything to the todo list.
@@ -22,7 +22,7 @@ The previous tutorial created a :code:`web_anon` role in the database with which
   grant all on api.todos to todo_user;
   grant usage, select on sequence api.todos_id_seq to todo_user;
 
-Step 2. Make a Secret
+Step 2. 生成一个密码
 ---------------------
 
 Clients authenticate with the API using JSON Web Tokens. These are JSON objects which are cryptographically signed using a password known to only us and the server. Because clients do not know the password, they cannot tamper with the contents of their tokens. PostgREST will detect counterfeit tokens and will reject them.
@@ -47,7 +47,7 @@ Open the :code:`tutorial.conf` (created in the previous tutorial) and add a line
 
 If the PostgREST server is still running from the previous tutorial, restart it to load the updated configuration file.
 
-Step 3. Sign a Token
+Step 3. 生成 token
 --------------------
 
 Ordinarily your own code in the database or in another server will create and sign authentication tokens, but for this tutorial we will make one "by hand." Go to `jwt.io <https://jwt.io/#debugger-io>`_ and fill in the fields like this:
@@ -63,7 +63,7 @@ Remember to fill in the password you generated rather than the word :code:`secre
 
   While the token may look well obscured, it's easy to reverse engineer the payload. The token is merely signed, not encrypted, so don't put things inside that you don't want a determined client to see.
 
-Step 4. Make a Request
+Step 4. 进行请求
 ----------------------
 
 Back in the terminal, let's use :code:`curl` to add a todo. The request will include an HTTP header containing the authentication token.
@@ -115,7 +115,7 @@ A request for the todos shows three of them, and all completed.
     }
   ]
 
-Step 4. Add Expiration
+Step 4. 添加过期时间
 ----------------------
 
 Currently our authentication token is valid for all eternity. The server, as long as it continues using the same JWT password, will honor the token.
@@ -168,7 +168,7 @@ After expiration, the API returns HTTP 401 Unauthorized:
 
   {"message":"JWT expired"}
 
-Bonus Topic: Immediate Revocation
+附加题: 立即撤销
 ---------------------------------
 
 Even with token expiration there are times when you may want to immediately revoke access for a specific token. For instance, suppose you learn that a disgruntled employee is up to no good and his token is still valid.
