@@ -1,20 +1,20 @@
-#### Sphinx source files for PostgREST documentation
+#### PostgREST 文档的 Sphinx 源文件 
 
-To generate HTML version:
+生成 HTML 版本:
 
-1. Install Sphinx from the [sphinx website](http://sphinx-doc.org/latest/install.html)
-2. Clone this repository
-4. Generate HTML
+1. 通过 [sphinx website](http://sphinx-doc.org/latest/install.html) 安装 Sphinx
+2. git clone repo
+4. 生成 HTML
     ```bash
     cd postgrest-docs
     sphinx-build -b html -a -n . _build
 
-    # open _build/index.html in your browser
+    # 在浏览器中 _build/index.html
     ```
 
 ---
 
-**Sphinx Installation Notes:**
+**Sphinx 安装提示:**
 
-* If you're on OSX you might want to install the Python from homebrew - then a simple `pip install sphinx` does the trick.
-* For an easier time refreshing your local preview of docs as you change it, try [sphinx-autobuild](https://github.com/GaretJax/sphinx-autobuild).
+* 如果是 OSX 你可能想直接通过 homebrew 来安装 Python from homebrew - 那么你可以简单的通过 `pip install sphinx` 来安装.
+* 为了更快的在本地预览，可以试试 [sphinx-autobuild](https://github.com/GaretJax/sphinx-autobuild).
