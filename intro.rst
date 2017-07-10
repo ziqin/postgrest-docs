@@ -8,7 +8,7 @@ Using PostgREST is an alternative to manual CRUD programming. Custom API servers
 Declarative Programming
 -----------------------
 
-It's easier to ask PostgreSQL to join data for you and let its query planner figure out the details than to loop through rows yourself. It's easier to assign permissions to db objects than to add guards in controllers. (This is especially true for cascading permissions in data dependencies.) It's easier set constraints than to litter code with sanity checks.
+It's easier to ask PostgreSQL to join data for you and let its query planner figure out the details than to loop through rows yourself. It's easier to assign permissions to db objects than to add guards in controllers. (This is especially true for cascading permissions in data dependencies.) It's easier to set constraints than to litter code with sanity checks.
 
 Leak-proof Abstraction
 ----------------------
@@ -40,17 +40,17 @@ PostgREST has a growing ecosystem of examples, and libraries, experiments, and u
 Client-Side Libraries
 ---------------------
 
-* `PierreRochard/angular2-postgrest <https://github.com/PierreRochard/angular2-postgrest>`_ - JS, Angular 2
 * `tomberek/aor-postgrest-client <https://github.com/tomberek/aor-postgrest-client>`_ - JS, admin-on-rest
 * `hugomrdias/postgrest-url <https://github.com/hugomrdias/postgrest-url>`_ - JS, just for generating query URLs
 * `john-kelly/elm-postgrest <https://github.com/john-kelly/elm-postgrest>`_ - Elm
 * `mithril.postgrest <https://github.com/catarse/mithril.postgrest>`_ - JS, Mithril
-* `thejettdurham/postgrest-sharp-client <https://github.com/thejettdurham/postgrest-sharp-client>`_ - C#, RestSharp
 * `lewisjared/postgrest-request <https://github.com/lewisjared/postgrest-request>`_ - JS, SuperAgent
 * `JarvusInnovations/jarvus-postgrest-apikit <https://github.com/JarvusInnovations/jarvus-postgrest-apikit>`_ - JS, Sencha framework
 * `davidthewatson/postgrest_python_requests_client <https://github.com/davidthewatson/postgrest_python_requests_client>`_ - Python
 * `calebmer/postgrest-client <https://github.com/calebmer/postgrest-client>`_ - JS
 * `clesiemo3/postgrestR <https://github.com/clesiemo3/postgrestR>`_ - R
+* `PierreRochard/postgrest-angular <https://github.com/PierreRochard/postgrest-angular>`_ - TypeScript, generate UI from API description
+* `thejettdurham/postgrest-sharp-client <https://github.com/thejettdurham/postgrest-sharp-client>`_ (needs maintainer) - C#, RestSharp
 
 External Notification
 ---------------------
@@ -61,10 +61,12 @@ These are PostgreSQL bridges that propagate LISTEN/NOTIFY to external queues for
 * `matthewmueller/pg-bridge <https://github.com/matthewmueller/pg-bridge>`_ - Amazon SNS
 * `aweber/pgsql-listen-exchange <https://github.com/aweber/pgsql-listen-exchange>`_ - RabbitMQ
 * `SpiderOak/skeeter <https://github.com/SpiderOak/skeeter>`_ - ZeroMQ
+* `FGRibreau/postgresql-to-amqp <https://github.com/FGRibreau/postgresql-to-amqp>`_ - AMQP
 
 Example Apps
 ------------
 
+* `subzerocloud/postgrest-starter-kit <https://github.com/subzerocloud/postgrest-starter-kit>`_ - Boilerplate for new project
 * `NikolayS/postgrest-google-translate <https://github.com/NikolayS/postgrest-google-translate>`_ - Calling to external translation service
 * `CodeforAustralia/heritage-near-me <https://github.com/CodeforAustralia/heritage-near-me>`_ - Elm and PostgREST with PostGIS
 * `timwis/handsontable-postgrest <https://github.com/timwis/handsontable-postgrest>`_ - An excel-like database table editor
@@ -79,6 +81,7 @@ Example Apps
 * `tyrchen/goodfilm <https://github.com/tyrchen/goodfilm>`_ - example film api
 * `begriffs/postgrest-example <https://github.com/begriffs/postgrest-example>`_ - sqitch versioning for API
 * `SMRxT/postgrest-demo <https://github.com/SMRxT/postgrest-demo>`_ - multi-tenant logging system
+* `PierreRochard/postgrest-boilerplate <https://github.com/PierreRochard/postgrest-boilerplate>`_ - example auth backend
 
 In Production
 -------------
@@ -89,6 +92,8 @@ In Production
 * `Image-charts <https://image-charts.com/>`_
 * `Drip Depot <https://www.dripdepot.com/>`_
 * `OpenBooking <http://openbooking.ch>`_
+* `Convene <https://info.convene.thomsonreuters.com/en.html>`_ by Thomson-Reuters
+* `eGull <http://www.egull.co>`_
 
 Extensions
 ----------
@@ -100,11 +105,33 @@ Extensions
 * `svmnotn/postgrest-auth <https://github.com/svmnotn/postgrest-auth>`_ - OAuth2-inspired external auth server
 * `nblumoe/postgrest-oauth <https://github.com/nblumoe/postgrest-oauth>`_ - OAuth2 WAI middleware
 
-Commercial PaaS
+Commercial
 ---------------
 
-* `Sub0 <http://graphqlapi.com/>`_ - Automated GraphQL & REST API with built-in caching (powered by PostgREST, not affiliated)
+* `subZero <https://subzero.cloud/>`_ - Automated GraphQL & REST API with built-in caching (powered in part by PostgREST)
 
+Testimonials
+############
+
+  "It's so fast to develop, it feels like cheating!"
+
+  -- François-G. Ribreau
+
+  "I just have to say that, the CPU/Memory usage compared to our
+  Node.js/Waterline ORM based API is ridiculous.  It's hard to even push
+  it over 60/70 MB while our current API constantly hits 1GB running on 6
+  instances (dynos)."
+
+  -- Louis Brauer
+
+  "I really enjoyed the fact that all of a sudden I was writing
+  microservices in SQL DDL (and v8 javascript functions). I dodged so
+  much boilerplate. The next thing I knew, we pulled out a full rewrite
+  of a Spring+MySQL legacy app in 6 months. Literally 10x faster, and
+  code was super concise. The old one took 3 years and a team of 4
+  people to develop."
+
+  -- Simone Scarduzio
 
 Getting Support
 ################
