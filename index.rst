@@ -1,4 +1,4 @@
-.. title:: PostgREST Documentation
+.. title:: PostgREST 文档
 
 .. image:: _static/logo.png
 
@@ -6,7 +6,7 @@
    :maxdepth: 2
 
 .. toctree::
-   :caption: What is PostgREST?
+   :caption: PostgREST 是什么?
 
    intro.rst
 
@@ -32,6 +32,6 @@
    api.rst
 
 .. toctree::
-   :caption: Authentication
+   :caption: 认证
 
    auth.rst
