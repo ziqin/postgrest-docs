@@ -1,4 +1,4 @@
-Binary Release
+可执行文件
 ==============
 
 [ `Download from release page <https://github.com/begriffs/postgrest/releases/latest>`_ ]
@@ -40,7 +40,7 @@ After installation completes, the tool is added to your $PATH and can be used fr
 
   postgrest --help
 
-PostgreSQL dependency
+PostgreSQL 依赖
 =====================
 
 To use PostgREST you will need an underlying database (PostgreSQL version 9.3 or greater is required). You can use something like Amazon `RDS <https://aws.amazon.com/rds/>`_ but installing your own locally is cheaper and more convenient for development.
@@ -51,7 +51,7 @@ To use PostgREST you will need an underlying database (PostgreSQL version 9.3 or
 
 .. _build_source:
 
-Build from Source
+源代码编译
 =================
 
 .. note::
@@ -88,10 +88,10 @@ When a pre-built binary does not exist for your system you can build the project
 
 * Check that the server is installed: :code:`postgrest --help`.
 
-PostgREST Test Suite
+PostgREST 测试套件
 --------------------
 
-Creating the Test Database
+创建测试库
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To properly run postgrest tests one needs to create a database. To do so, use the test creation script :code:`create_test_database` in the :code:`test/` folder.
@@ -116,7 +116,7 @@ The script will return the db uri to use in the tests--this uri corresponds to t
 
 Generating the user and the password allows one to create the database and run the tests against any postgres server without any modifications to the server. (Such as allowing accounts without a passoword or setting up trust authentication, or requiring the server to be on the same localhost the tests are run from).
 
-Running the Tests
+运行测试
 ~~~~~~~~~~~~~~~~~
 
 To run the tests, one must supply the database uri in the environment variable :code:`POSTGREST_TEST_CONNECTION`.
@@ -144,7 +144,7 @@ If the environment variable is empty or not specified, then the test runner will
 
 This connection assumes the test server on the :code:`localhost:code:` with the user `postgrest_test` without the password and the database of the same name.
 
-Destroying the Database
+销毁数据库
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The test database will remain after the test, together with four new roles created on the postgres server. To permanently erase the created database and the roles, run the script :code:`test/delete_test_database`, using the same superuser role used for creating the database:
@@ -153,7 +153,7 @@ The test database will remain after the test, together with four new roles creat
 
   test/destroy_test_db connection_uri database_name
 
-Testing with Docker
+使用 Docker 测试
 ~~~~~~~~~~~~~~~~~~~
 
 The ability to connect to non-local PostgreSQL simplifies the test setup. One elegant way of testing is to use a disposable PostgreSQL in docker.

@@ -1,6 +1,6 @@
 .. _configuration:
 
-Configuration
+配置
 =============
 
 The PostgREST server reads a configuration file to determine information about the database and how to serve client requests. There is no predefined location for this file, you must specify the file path as the one and only argument to the server:
@@ -86,7 +86,7 @@ max-rows
 pre-request
   A schema-qualified stored procedure name to call right after switching roles for a client request. This provides an opportunity to modify SQL variables or raise an exception to prevent the request from completing.
 
-Running the Server
+启动 Server
 ------------------
 
 PostgREST outputs basic request logging to stdout. When running it in an SSH session you must detach it from stdout or it will be terminated when the session closes. The easiest technique is redirecting the output to a logfile or to the syslog:
@@ -100,7 +100,7 @@ PostgREST outputs basic request logging to stdout. When running it in an SSH ses
 
 (Avoid :code:`nohup postgrest` because the HUP signal is used for manual :ref:`schema_reloading`.)
 
-Hardening PostgREST
+硬化 PostgREST
 ===================
 
 PostgREST is a fast way to construct a RESTful API. Its default behavior is great for scaffolding in development. When it's time to go to production it works great too, as long as you take precautions. PostgREST is a small sharp tool that focuses on performing the API-to-database mapping. We rely on a reverse proxy like Nginx for additional safeguards.
@@ -134,7 +134,7 @@ The first step is to create an Nginx configuration file that proxies requests to
 
 .. _block_fulltable:
 
-Block Full-Table Operations
+阻止全表操作
 ---------------------------
 
 Each table in the admin-selected schema gets exposed as a top level route. Client requests are executed by certain database roles depending on their authentication. All HTTP verbs are supported that correspond to actions permitted to the role. For instance if the active role can drop rows of the table then the DELETE verb is allowed for clients. Here's an API request to delete old rows from a hypothetical logs table:
@@ -196,7 +196,7 @@ HTTPS
 
 See the :ref:`ssl` section of the authentication guide.
 
-Rate Limiting
+限速
 -------------
 
 Nginx supports "leaky bucket" rate limiting (see `official docs <https://nginx.org/en/docs/http/ngx_http_limit_req_module.html>`_). Using standard Nginx configuration, routes can be grouped into *request zones* for rate limiting. For instance we can define a zone for login attempts:
@@ -220,7 +220,7 @@ The burst argument tells Nginx to start dropping requests if more than five queu
 
 Nginx rate limiting is general and indescriminate. To rate limit each authenticated request individually you will need to add logic in a :ref:`Custom Validation <custom_validation>` function.
 
-Debugging
+调试
 =========
 
 The PostgREST server logs basic request information to stdout, including the requesting IP address and user agent, the URL requested, and HTTP response status. However this provides limited information for debugging server errors. It's helpful to get full information about both client requests and the corresponding SQL commands executed against the underlying database.
@@ -257,7 +257,7 @@ Restart the database and watch the log file in real-time to understand how HTTP 
 
 .. _schema_reloading:
 
-Schema Reloading
+Schema 重载
 ----------------
 
 Users are often confused by PostgREST's database schema cache. It is present because detecting foreign key relationships between tables (including how those relationships pass through views) is necessary, but costly. API requests consult the schema cache as part of :ref:`resource_embedding`. However if the schema changes while the server is running it results in a stale cache and leads to errors claiming that no relations are detected between tables.
@@ -270,7 +270,7 @@ To refresh the cache without restarting the PostgREST server, send the server pr
 
 In the future we're investigating ways to keep the cache updated without manual intervention.
 
-Alternate URL Structure
+备用 URL 结构
 =======================
 
 As discussed in :ref:`singular_plural`, there are no special URL forms for singular resources in PostgREST, only operators for filtering. Thus there are no URLs like :code:`/people/1`. It would be specified instead as

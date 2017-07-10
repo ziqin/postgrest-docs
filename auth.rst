@@ -1,11 +1,11 @@
 .. _roles:
 
-Overview of Role System
+角色系统概述
 =======================
 
 PostgREST is designed to keep the database at the center of API security. All authorization happens through database roles and permissions. It is PostgREST's job to **authenticate** requests -- i.e. verify that a client is who they say they are -- and then let the database **authorize** client actions.
 
-Authentication Sequence
+验证序列
 -----------------------
 
 There are three types of roles used by PostgREST, the **authenticator**, **anonymous** and **user** roles. The database administrator creates these roles and configures PostgREST to use them.
@@ -38,12 +38,12 @@ Note that the database administrator must allow the authenticator role to switch
 
 If the client included no JWT (or one without a role claim) then PostgREST switches into the anonymous role whose actual database-specific name, like that of with the authenticator role, is specified in the PostgREST server configuration file. The database administrator must set anonymous role permissions correctly to prevent anonymous users from seeing or changing things they shouldn't.
 
-Users and Groups
+用户和组
 ----------------
 
 PostgreSQL manages database access permissions using the concept of roles. A role can be thought of as either a database user, or a group of database users, depending on how the role is set up.
 
-Roles for Each Web User
+每个 Web 用户的角色
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 PostgREST can accommodate either viewpoint. If you treat a role as a single user then the the JWT-based role switching described above does most of what you need. When an authenticated user makes a request PostgREST will switch into the role for that user, which in addition to restricting queries, is available to SQL through the :code:`current_user` variable.
@@ -73,7 +73,7 @@ PostgreSQL (9.5 and later) allows us to set this policy with row-level security:
 
 Anyone accessing the generated API endpoint for the chat table will see exactly the rows they should, without our needing custom imperative server-side coding.
 
-Web Users Sharing Role
+Web 用户共享角色
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Alternately database roles can represent groups instead of (or in addition to) individual users. You may choose that all signed-in users for a web app share the role webuser. You can distinguish individual users by including extra claims in the JWT such as email.
@@ -93,7 +93,7 @@ SQL code can access claims through GUC variables set by PostgREST per request. F
 
 This allows JWT generation services to include extra information and your database code to react to it. For instance the RLS example could be modified to use this current_setting rather than current_user.  The second 'true' argument tells current_setting to return NULL if the setting is missing from the current configuration.
 
-Hybrid User-Group Roles
+混合用户组角色
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 There is no performance penalty for having many database roles, although roles are namespaced per-cluster rather than per-database so may be prone to collision within the database. You are free to assign a new role for every user in a web application if desired. You can mix the group and individual role policies. For instance we could still have a webuser role and individual users which inherit from it:
@@ -113,7 +113,7 @@ There is no performance penalty for having many database roles, although roles a
 
 .. _custom_validation:
 
-Custom Validation
+自定义验证
 -----------------
 
 PostgREST honors the :code:`exp` claim for token expiration, rejecting expired tokens. However it does not enforce any extra constraints. An example of an extra constraint would be to immediately revoke access for a certain user. The configuration file paramter :code:`pre-request` specifies a stored procedure to call immediately after the authenticator switches into a new role and before the main query itself runs.
@@ -139,7 +139,7 @@ In the function you can run arbitrary code to check the request and raise an exc
   END
   $$;
 
-Client Auth
+客户端 Auth
 ===========
 
 To make an authenticated request the client must include an :code:`Authorization` HTTP header with the value :code:`Bearer <jwt>`. For instance:
@@ -228,7 +228,7 @@ Our code requires a database role in the JWT. To add it you need to save the dat
     }
   })
 
-JWT security
+JWT 安全
 ~~~~~~~~~~~~
 
 There are at least three types of common critiques against using JWT: 1) against the standard itself, 2) against using libraries with known security vulnerabilities, and 3) against using JWT for web sessions. We'll briefly explain each critique, how PostgREST deals with it, and give recommendations for appropriate user action.
@@ -248,15 +248,15 @@ SSL
 
 PostgREST aims to do one thing well: add an HTTP interface to a PostgreSQL database. To keep the code small and focused we do not implement SSL. Use a reverse proxy such as NGINX to add this, `here's how <https://nginx.org/en/docs/http/configuring_https_servers.html>`_. Note that some Platforms as a Service like Heroku also add SSL automatically in their load balancer.
 
-Schema Isolation
+架构隔离
 ================
 
 A PostgREST instance is configured to expose all the tables, views, and stored procedures of a single schema specified in a server configuration file. This means private data or implementation details can go inside a private schema and be invisible to HTTP clients. You can then expose views and stored procedures which insulate the internal details from the outside world. It keeps you code easier to refactor, and provides a natural way to do API versioning. For an example of wrapping a private table with a public view see the :ref:`public_ui` section below.
 
-SQL User Management
+SQL 用户管理
 ===================
 
-Storing Users and Passwords
+存储用户和密码
 ---------------------------
 
 As mentioned, an external service can provide user management and coordinate with the PostgREST server using JWT. It's also possible to support logins entirely through SQL. It's a fair bit of work, so get ready.
@@ -346,12 +346,12 @@ With the table in place we can make a helper to check a password against the enc
 
 .. _public_ui:
 
-Public User Interface
+Public 用户界面
 ---------------------
 
 In the previous section we created an internal table to store user information. Here we create a login function which takes an email address and password and returns JWT if the credentials match a user in the internal table.
 
-Logins
+登录
 ~~~~~~
 
 As described in `JWT from SQL`_, we'll create a JWT inside our login function. Note that you'll need to adjust the secret key which is hard-coded in this example to a secure secret of your choosing.
@@ -400,7 +400,7 @@ The response would look like the snippet below. Try decoding the token at `jwt.i
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZvb0BiYXIuY29tIiwicm9sZSI6ImF1dGhvciJ9.fpf3_ERi5qbWOE5NPzvauJgvulm0zkIG9xSm2w5zmdw"
   }
 
-Permissions
+权限
 ~~~~~~~~~~~
 
 Your database roles need access to the schema, tables, views and functions in order to service HTTP requests. Recall from the `Overview of Role System`_ that PostgREST uses special roles to process requests, namely the authenticator and anonymous roles. Below is an example of permissions that allow anonymous users to create accounts and attempt to log in.
