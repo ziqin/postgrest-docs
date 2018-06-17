@@ -8,7 +8,7 @@ Tutorial 1 - 金钥匙
 Step 1. 添加一个受信的用户
 --------------------------
 
-上一节中，进行匿名 Web 请求的事后在数据库中创建了一个 :code:`web_anon` 角色。让我们在创建一个角色叫做 :code:`todo_user` 用于使用 API 进行身份验证的用户，这个角色将有权对 todo list 做任何事情。
+上一节中，进行匿名 Web 请求的事后在数据库中创建了一个 :code:`web_anon` 角色。让我们再创建一个叫做 :code:`todo_user` 的角色用于使用 API 进行身份验证的用户，这个角色将有权对 todo list 做任何事情。
 
 .. code-block:: postgres
 
@@ -61,7 +61,7 @@ Step 3. 生成 token
 
 .. note::
 
-  虽然令牌可能看起来很模糊，但很容易逆向出的 payload。token 仅仅是被签名，没有加密，所以如果你有不想让客户端看到的信息请不要放在里面。
+  虽然令牌可能看起来很模糊，但很容易逆向得到 payload。token 仅仅是被签名，没有加密，所以如果你有不想让客户端看到的信息，请不要将它们放在里面。
 
 Step 4. 进行请求
 ----------------------
@@ -171,11 +171,11 @@ Step 4. 添加过期时间
 附加题: 立即撤销
 ---------------------------------
 
-Even with token expiration there are times when you may want to immediately revoke access for a specific token. For instance, suppose you learn that a disgruntled employee is up to no good and his token is still valid.
+即使有 token 过期时间，有时你也可能想立即撤回某个 token 的权限，比方说你发现某个心怀怨气的员工不怀好意，而他的 token 仍然有效的时候。 
 
-To revoke a specific token we need a way to tell it apart from others. Let's add a custom :code:`email` claim that matches the email of the client issued the token.
+为了能撤销一个特定的 token，我们需要用某种方式将它和其他的 token 区分开来。让我们填加一个自定义的 :code:`email` 声明，它与发布 token 的客户的 email 相匹配。
 
-Go ahead and make a new token with the payload
+继续用这个 payload 创建一个新的 token
 
 .. code-block:: json
 
@@ -184,15 +184,15 @@ Go ahead and make a new token with the payload
     "email": "disgruntled@mycompany.com"
   }
 
-Save it to an environment variable:
+把它存到一个环境变量里：
 
 .. code-block:: bash
 
   export WAYWARD_TOKEN="<paste new token>"
 
-PostgREST allows us to specify a stored procedure to run during attempted authentication. The function can do whatever it likes, including raising an exception to terminate the request.
+PostgREST 允许我们指定在尝试认证时运行的存储程序。这个存储程序（函数）可以为所欲为，包括通过引发异常来终止请求。
 
-First make a new schema and add the function:
+首先创建一个新的 schema，并添加下列函数：
 
 .. code-block:: plpgsql
 
@@ -211,7 +211,7 @@ First make a new schema and add the function:
   end
   $$;
 
-Next update :code:`tutorial.conf` and specify the new function:
+接着更新 :code:`tutorial.conf`，指明该函数：
 
 .. code-block:: ini
 
@@ -219,7 +219,7 @@ Next update :code:`tutorial.conf` and specify the new function:
 
   pre-request = "auth.check_token"
 
-Restart PostgREST for the change to take effect. Next try making a request with our original token and then with the revoked one.
+重启 PostgREST 使修改生效。接着，试试用我们原来的 token 创建一个请求，然后试试撤销掉的那个。
 
 .. code-block:: bash
 
@@ -233,7 +233,7 @@ Restart PostgREST for the change to take effect. Next try making a request with 
   curl http://localhost:3000/todos \
        -H "Authorization: Bearer $WAYWARD_TOKEN"
 
-The server responds with 403 Forbidden:
+服务器会响应 403 Forbidden：
 
 .. code-block:: json
 
